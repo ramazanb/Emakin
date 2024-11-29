@@ -13,7 +13,7 @@ Provides text helper methods under AltiKareUtils.Text namespace. Contains follow
 Syntax:
 
 ```javascript
-string toSearchText(arg1, arg2...)
+string toSearchText(arg1 [, arg2...])
 ```
 
 Examples:
