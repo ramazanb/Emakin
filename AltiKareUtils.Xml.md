@@ -29,10 +29,10 @@ console.log(AltiKareUtils.Xml.parse("<a>5</a>").Evaluate("/a");
 <p>Unescapes value escaped for XML.</p>
 
 ## padLeft
-<p>Converts a value to padded string.</p>
+<p>Adds padding character to value if its length is lower than specified.</p>
 
 ## setValueAndCaption
-<p>Profides a helper to set both value and "Caption" attribute of path.</p>
+<p>Provides a helper to set both value and "Caption" attribute of path.</p>
 
 ## toObject
 <p>Converts given XML to javascript object.</p>
