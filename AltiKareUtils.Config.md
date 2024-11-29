@@ -9,14 +9,10 @@
   This method is mainly used by internal methods, and configuration user interfaces.
 </p>
 
-```
-AltiKare.Workflow.Agent.exe registerstore "mycompany.com" "PS_GLB" "AltiKareUtils.txt"
-```
-
 Syntax:
 
 ```js
-bool hasGlobalDB()
+bool hasGlobalDB([reset])
 ```
 
 Examples:
@@ -26,23 +22,41 @@ console.log(AltiKareUtils.Config.hasGlobalDB());
 // false
 ```
 
-## escape
-<p>Escapes value to be used directly in XML as string.</p>
+## resolveContext
+<p>Returns process defined context if given parameter is empty.</p>
+<p>This method is mainly used by internal methods, and configuration user interfaces.</p>
 
-## unescape
-<p>Unescapes value escaped for XML.</p>
+Syntax:
 
-## padLeft
-<p>Converts a value to padded string.</p>
+```js
+string resolveContext([context])
+```
 
-## setValueAndCaption
-<p>Profides a helper to set both value and "Caption" attribute of path.</p>
+## getConfig
+<p>Reads configuration for domain, then global if no config found and global DB configured.</p>
 
-## toObject
-<p>Converts given XML to javascript object.</p>
+## getDomainConfig
+<p>Reads configuration for domain.</p>
 
-## toJSON
+## getGlobalConfig
 <p>Converts given XML to object, then JSON string.</p>
+<p>DB error might occour and your process might be stopped if global (multi-tenant) DB is not configured.</p>
 
-## toArray
-<p>Converts given XML to javascript array.</p>
+## getIdentityConfig
+<p>Reads configuration for given identity.</p>
+
+## invalidateCache
+<p>Removes all keys from cache.</p>
+
+## parseConfigValue
+<p>Parses given value by config. type.</p>
+<p>This method is mainly used by internal methods, and configuration user interfaces.</p>
+
+## setDomainConfig
+<p>Sets configuration for domain.</p>
+
+## setIdentityConfig
+<p>Sets configuration for identity</p>
+
+## setGlobalConfig
+<p>Sets global  (multi-tenant) configuration.</p>
