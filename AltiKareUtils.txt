@@ -1,0 +1,3676 @@
+<ProcessDefinition Version="13" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <Namespaces>
+    <Namespace Prefix="forms" NamespaceURI="http://schemas.emakin.com" SchemaLocation="http://schemas.emakin.com" />
+  </Namespaces>
+  <Pools>
+    <Pool Id="3a14aada-5b82-45a1-ab15-dbd7e9ec5209" Name="Configuration" RootElement="Config" DefaultForm="f3a17002-a25e-431c-9c0e-7ab9be0e7f3d" IsAdministrative="True" IsAnonymouslyAccessible="False" WorklistTag="">
+      <DocumentationUrl />
+      <SupportUrl />
+      <Tasks>
+        <Task Id="267bb1fc-5ad3-4e25-b17b-c5ec1b5e8d39" Name="Configuration" Caption="Configuration" IsInitiator="True" IsCaseHandler="False" ExecuteDelayed="False" Type="Normal" Module="Automation" Duration="" DeadlineAction="">
+          <Actions>
+            <Action Id="2cec0d2f-7500-4c00-8d5f-ea015e04f49c" Name="Save" Caption="Save" Hidden="False" Follow="True" Order="0" Comment="Optional" ValidationGroup="Save" Icon="floppy-o" Color="" BackgroundColor="" IsBulkSelectable="False">
+              <ConfirmationMessage><![CDATA[]]></ConfirmationMessage>
+              <AutoSelectRule Type="DecisionTable">
+                <DecisionTable HitPolicy="Unique" Aggregation="None" Id="" Name="">
+                  <OutputLabel><![CDATA[]]></OutputLabel>
+                  <Inputs />
+                  <Outputs>
+                    <Output TypeRef="boolean" Name="SelectAction" Locked="False">
+                      <Label><![CDATA[AutoSelectAction]]></Label>
+                      <OutputValues><![CDATA[]]></OutputValues>
+                      <Default TypeRef=""><![CDATA[true]]></Default>
+                    </Output>
+                  </Outputs>
+                  <Rules />
+                </DecisionTable>
+                <Expression TypeRef="" Language="Feel" Id="" Name=""><![CDATA[]]></Expression>
+              </AutoSelectRule>
+              <SelectScript>
+                <Content><![CDATA[]]></Content>
+              </SelectScript>
+              <Routes />
+            </Action>
+            <Action Id="f0dae613-cf91-4d8d-992b-84fee73253a4" Name="Load Identity Config" Caption="Load Identity Config" Hidden="False" Follow="True" Order="1" Comment="Hidden" ValidationGroup="IdentityConfig" Icon="user" Color="" BackgroundColor="" IsBulkSelectable="False">
+              <ConfirmationMessage><![CDATA[<p>Changes in domain configuration will  be IGNORED, and selected Identities config. will be loaded. Are you sure?</p>]]></ConfirmationMessage>
+              <AutoSelectRule Type="DecisionTable">
+                <DecisionTable HitPolicy="Unique" Aggregation="None" Id="" Name="">
+                  <OutputLabel><![CDATA[]]></OutputLabel>
+                  <Inputs />
+                  <Outputs>
+                    <Output TypeRef="boolean" Name="SelectAction" Locked="False">
+                      <Label><![CDATA[AutoSelectAction]]></Label>
+                      <OutputValues><![CDATA[]]></OutputValues>
+                      <Default TypeRef=""><![CDATA[true]]></Default>
+                    </Output>
+                  </Outputs>
+                  <Rules />
+                </DecisionTable>
+                <Expression TypeRef="" Language="Feel" Id="" Name=""><![CDATA[]]></Expression>
+              </AutoSelectRule>
+              <SelectScript>
+                <Content><![CDATA[]]></Content>
+              </SelectScript>
+              <Routes>
+                <Route Id="e025bc0a-be80-44d0-b128-8065ab065d34" Name="" Target="d08025b6-0062-401e-a4d8-50491a978cbe">
+                  <Instructions><![CDATA[]]></Instructions>
+                  <ValidationRule Type="DecisionTable">
+                    <DecisionTable HitPolicy="Unique" Aggregation="None" Id="" Name="">
+                      <OutputLabel><![CDATA[]]></OutputLabel>
+                      <Inputs />
+                      <Outputs>
+                        <Output TypeRef="boolean" Name="IsValid" Locked="False">
+                          <Label><![CDATA[IsValidRoute]]></Label>
+                          <OutputValues><![CDATA[]]></OutputValues>
+                          <Default TypeRef=""><![CDATA[true]]></Default>
+                        </Output>
+                      </Outputs>
+                      <Rules />
+                    </DecisionTable>
+                    <Expression TypeRef="" Language="Feel" Id="" Name=""><![CDATA[]]></Expression>
+                  </ValidationRule>
+                </Route>
+              </Routes>
+            </Action>
+          </Actions>
+          <PreWork>
+            <Content><![CDATA[if (!$WorkItem.Previous) {
+    Tests.runTests();
+
+    if (!AltiKareUtils.Config.hasGlobalDB())
+        $Xml.SelectSingle("GlobalConfig").SetAttribute("hide", true);
+    else
+        Functions.loadConfig("GlobalConfig/Entry", null, true);
+
+    Functions.loadConfig("DomainConfig/Entry", null, false);
+
+    $Xml.SelectSingle("TestPad").SetAttribute("Context", (Config && Config.CONTEXT) || $CONTEXT);
+}
+]]></Content>
+          </PreWork>
+          <PostWork>
+            <Content><![CDATA[if ($WorkItem.SelectedAction === 'Save') {
+    Functions.saveConfig("GlobalConfig/Entry", null, true);
+    Functions.saveConfig("DomainConfig/Entry", null, false);
+}]]></Content>
+          </PostWork>
+          <Variables />
+          <Configurations>
+            <User Role="" WatcherRole="" Form="" DeadlineNotify="True" AllowDefaultPrint="True" IsHidden="False" AllowForward="True" AllowDelegation="True" AccessScope="">
+              <Tags><![CDATA[]]></Tags>
+              <Instructions><![CDATA[]]></Instructions>
+              <FormSections />
+              <FirstNotification Duration="" Template="" />
+              <FirstReminder Duration="" Template="" />
+              <RepeatingReminder Duration="" Template="" />
+              <Deadline Template="" />
+              <WatcherNotification Duration="" Template="" />
+              <PrintTemplates />
+            </User>
+            <Case>
+              <ConditionXPath><![CDATA[]]></ConditionXPath>
+            </Case>
+            <SubWorkflow Pool="" Task="" Mode="CreateInstancesAndContinue">
+              <XPath><![CDATA[]]></XPath>
+              <ConditionXPath><![CDATA[]]></ConditionXPath>
+              <RowIdXPath><![CDATA[]]></RowIdXPath>
+              <SyncXPath><![CDATA[]]></SyncXPath>
+            </SubWorkflow>
+            <Automation>
+              <Script>
+                <Content><![CDATA[]]></Content>
+              </Script>
+            </Automation>
+            <Event>
+              <EventName><![CDATA[]]></EventName>
+              <XPath><![CDATA[]]></XPath>
+              <HandleScript>
+                <Content><![CDATA[]]></Content>
+              </HandleScript>
+            </Event>
+            <Mail Priority="Normal">
+              <Subject><![CDATA[]]></Subject>
+              <To>
+                <XPath />
+                <EMailAddress />
+                <DisplayName />
+              </To>
+              <Cc>
+                <XPath />
+                <EMailAddress />
+                <DisplayName />
+              </Cc>
+              <Bcc>
+                <XPath />
+                <EMailAddress />
+                <DisplayName />
+              </Bcc>
+              <Body><![CDATA[]]></Body>
+              <Attachments>
+                <XPath />
+              </Attachments>
+            </Mail>
+          </Configurations>
+          <Evaluation Enabled2="False" Interval="">
+            <Schedule Name="" />
+            <Operation>
+              <Content><![CDATA[]]></Content>
+            </Operation>
+          </Evaluation>
+        </Task>
+        <Task Id="d08025b6-0062-401e-a4d8-50491a978cbe" Name="Identity Configuration" Caption="Identity Configuration" IsInitiator="False" IsCaseHandler="False" ExecuteDelayed="False" Type="Normal" Module="Automation" Duration="" DeadlineAction="">
+          <Actions>
+            <Action Id="8fe0d4e7-92d7-457f-8a4d-a655459db0b9" Name="Save" Caption="Save" Hidden="False" Follow="True" Order="0" Comment="Optional" ValidationGroup="Save" Icon="floppy-o" Color="" BackgroundColor="" IsBulkSelectable="False">
+              <ConfirmationMessage><![CDATA[]]></ConfirmationMessage>
+              <AutoSelectRule Type="DecisionTable">
+                <DecisionTable HitPolicy="Unique" Aggregation="None" Id="" Name="">
+                  <OutputLabel><![CDATA[]]></OutputLabel>
+                  <Inputs />
+                  <Outputs>
+                    <Output TypeRef="boolean" Name="SelectAction" Locked="False">
+                      <Label><![CDATA[AutoSelectAction]]></Label>
+                      <OutputValues><![CDATA[]]></OutputValues>
+                      <Default TypeRef=""><![CDATA[true]]></Default>
+                    </Output>
+                  </Outputs>
+                  <Rules />
+                </DecisionTable>
+                <Expression TypeRef="" Language="Feel" Id="" Name=""><![CDATA[]]></Expression>
+              </AutoSelectRule>
+              <SelectScript>
+                <Content><![CDATA[]]></Content>
+              </SelectScript>
+              <Routes />
+            </Action>
+            <Action Id="361af1da-822f-4969-8fee-d77cfc6846c2" Name="Load Identity Config" Caption="Load Identity Config" Hidden="False" Follow="True" Order="1" Comment="Hidden" ValidationGroup="IdentityConfig" Icon="user" Color="" BackgroundColor="" IsBulkSelectable="False">
+              <ConfirmationMessage><![CDATA[]]></ConfirmationMessage>
+              <AutoSelectRule Type="DecisionTable">
+                <DecisionTable HitPolicy="Unique" Aggregation="None" Id="" Name="">
+                  <OutputLabel><![CDATA[]]></OutputLabel>
+                  <Inputs />
+                  <Outputs>
+                    <Output TypeRef="boolean" Name="SelectAction" Locked="False">
+                      <Label><![CDATA[AutoSelectAction]]></Label>
+                      <OutputValues><![CDATA[]]></OutputValues>
+                      <Default TypeRef=""><![CDATA[true]]></Default>
+                    </Output>
+                  </Outputs>
+                  <Rules />
+                </DecisionTable>
+                <Expression TypeRef="" Language="Feel" Id="" Name=""><![CDATA[]]></Expression>
+              </AutoSelectRule>
+              <SelectScript>
+                <Content><![CDATA[]]></Content>
+              </SelectScript>
+              <Routes>
+                <Route Id="680945ce-e1cf-4af2-a4a4-afa97acc5f8b" Name="" Target="d08025b6-0062-401e-a4d8-50491a978cbe">
+                  <Instructions><![CDATA[]]></Instructions>
+                  <ValidationRule Type="DecisionTable">
+                    <DecisionTable HitPolicy="Unique" Aggregation="None" Id="" Name="">
+                      <OutputLabel><![CDATA[]]></OutputLabel>
+                      <Inputs />
+                      <Outputs>
+                        <Output TypeRef="boolean" Name="IsValid" Locked="False">
+                          <Label><![CDATA[IsValidRoute]]></Label>
+                          <OutputValues><![CDATA[]]></OutputValues>
+                          <Default TypeRef=""><![CDATA[true]]></Default>
+                        </Output>
+                      </Outputs>
+                      <Rules />
+                    </DecisionTable>
+                    <Expression TypeRef="" Language="Feel" Id="" Name=""><![CDATA[]]></Expression>
+                  </ValidationRule>
+                </Route>
+              </Routes>
+            </Action>
+            <Action Id="0cbccd9d-aad5-4f64-80bb-ab487d9236c3" Name="Cancel" Caption="Cancel" Hidden="False" Follow="False" Order="2" Comment="Optional" ValidationGroup="" Icon="ban" Color="" BackgroundColor="" IsBulkSelectable="False">
+              <ConfirmationMessage><![CDATA[]]></ConfirmationMessage>
+              <AutoSelectRule Type="DecisionTable">
+                <DecisionTable HitPolicy="Unique" Aggregation="None" Id="" Name="">
+                  <OutputLabel><![CDATA[]]></OutputLabel>
+                  <Inputs />
+                  <Outputs>
+                    <Output TypeRef="boolean" Name="SelectAction" Locked="False">
+                      <Label><![CDATA[AutoSelectAction]]></Label>
+                      <OutputValues><![CDATA[]]></OutputValues>
+                      <Default TypeRef=""><![CDATA[true]]></Default>
+                    </Output>
+                  </Outputs>
+                  <Rules />
+                </DecisionTable>
+                <Expression TypeRef="" Language="Feel" Id="" Name=""><![CDATA[]]></Expression>
+              </AutoSelectRule>
+              <SelectScript>
+                <Content><![CDATA[]]></Content>
+              </SelectScript>
+              <Routes />
+            </Action>
+          </Actions>
+          <PreWork>
+            <Content><![CDATA[$Xml.Remove("IdentityConfig/Config/Entry");
+Functions.loadConfig("IdentityConfig/Config/Entry", $Xml.Evaluate("IdentityConfig/Filter/Identity"), false);
+$Xml.SelectSingle("IdentityConfig").SetAttribute("Loaded", true);]]></Content>
+          </PreWork>
+          <PostWork>
+            <Content><![CDATA[if ($WorkItem.SelectedAction === 'Save') {
+    var identity = $Xml.Evaluate("IdentityConfig/Filter/Identity");
+    if (identity)
+        Functions.saveConfig("IdentityConfig/Config/Entry", identity, false);
+}]]></Content>
+          </PostWork>
+          <Variables />
+          <Configurations>
+            <User Role="737dd00d-9af4-4324-be35-ccf3696489a8" WatcherRole="" Form="" DeadlineNotify="True" AllowDefaultPrint="True" IsHidden="False" AllowForward="True" AllowDelegation="True" AccessScope="">
+              <Tags><![CDATA[]]></Tags>
+              <Instructions><![CDATA[]]></Instructions>
+              <FormSections>
+                <FormSection Name="Non Identity Config" State="Hidden" />
+              </FormSections>
+              <FirstNotification Duration="" Template="" />
+              <FirstReminder Duration="" Template="" />
+              <RepeatingReminder Duration="" Template="" />
+              <Deadline Template="" />
+              <WatcherNotification Duration="" Template="" />
+              <PrintTemplates />
+            </User>
+            <Case>
+              <ConditionXPath><![CDATA[]]></ConditionXPath>
+            </Case>
+            <SubWorkflow Pool="" Task="" Mode="CreateInstancesAndContinue">
+              <XPath><![CDATA[]]></XPath>
+              <ConditionXPath><![CDATA[]]></ConditionXPath>
+              <RowIdXPath><![CDATA[]]></RowIdXPath>
+              <SyncXPath><![CDATA[]]></SyncXPath>
+            </SubWorkflow>
+            <Automation>
+              <Script>
+                <Content><![CDATA[]]></Content>
+              </Script>
+            </Automation>
+            <Event>
+              <EventName><![CDATA[]]></EventName>
+              <XPath><![CDATA[]]></XPath>
+              <HandleScript>
+                <Content><![CDATA[]]></Content>
+              </HandleScript>
+            </Event>
+            <Mail Priority="Normal">
+              <Subject><![CDATA[]]></Subject>
+              <To>
+                <XPath />
+                <EMailAddress />
+                <DisplayName />
+              </To>
+              <Cc>
+                <XPath />
+                <EMailAddress />
+                <DisplayName />
+              </Cc>
+              <Bcc>
+                <XPath />
+                <EMailAddress />
+                <DisplayName />
+              </Bcc>
+              <Body><![CDATA[]]></Body>
+              <Attachments>
+                <XPath />
+              </Attachments>
+            </Mail>
+          </Configurations>
+          <Evaluation Enabled2="False" Interval="">
+            <Schedule Name="" />
+            <Operation>
+              <Content><![CDATA[]]></Content>
+            </Operation>
+          </Evaluation>
+        </Task>
+      </Tasks>
+      <Roles>
+        <Role Id="737dd00d-9af4-4324-be35-ccf3696489a8" Name="Initiator" Caption="Initiator">
+          <Identity Type="Expression">
+            <DecisionTable HitPolicy="Unique" Aggregation="None" Id="" Name="">
+              <OutputLabel><![CDATA[]]></OutputLabel>
+              <Inputs>
+                <Input Locked="False">
+                  <Label><![CDATA[]]></Label>
+                  <Expression TypeRef=""><![CDATA[]]></Expression>
+                  <InputValues><![CDATA[]]></InputValues>
+                </Input>
+              </Inputs>
+              <Outputs>
+                <Output TypeRef="identity" Name="Identity" Locked="False">
+                  <Label><![CDATA[AssignedTo]]></Label>
+                  <OutputValues><![CDATA[]]></OutputValues>
+                  <Default TypeRef=""><![CDATA[]]></Default>
+                </Output>
+              </Outputs>
+              <Rules />
+            </DecisionTable>
+            <Expression TypeRef="" Language="Javascript" Id="" Name=""><![CDATA[$Initiator]]></Expression>
+            <Participant>
+              <EMailAddress />
+              <DisplayName />
+              <Language />
+            </Participant>
+          </Identity>
+        </Role>
+      </Roles>
+      <OpeningWork>
+        <Content><![CDATA[]]></Content>
+      </OpeningWork>
+      <ClosingWork>
+        <Content><![CDATA[]]></Content>
+      </ClosingWork>
+      <TerminationWork>
+        <Content><![CDATA[]]></Content>
+      </TerminationWork>
+      <Forms>
+        <Form Id="f3a17002-a25e-431c-9c0e-7ab9be0e7f3d" Name="Form" Caption="Form" MaxWidth="0" SectionName="" HtmlClass="">
+          <Contents>
+            <TabbedContent Mode="Horizontal" FitHeight="False" XPath="" SectionName="" HtmlClass="">
+              <Rules />
+              <Tabs>
+                <Tab XPath="GlobalConfig" SectionName="Non Identity Config" HtmlClass="">
+                  <Rules>
+                    <FormattingRule Hidden="True" Disabled="Inherit" BackgroundColor="" Color="" Bold="False" Italic="False" Enabled="True">
+                      <Condition>
+                        <Content><![CDATA[return $Xml.EvaluateBoolean("@hide");]]></Content>
+                      </Condition>
+                    </FormattingRule>
+                  </Rules>
+                  <Label>
+                    <Content><![CDATA[Global Configuration]]></Content>
+                  </Label>
+                  <Controls>
+                    <RowContent Type="Section" Collapsing="None" FitHeight="False" XPath="" SectionName="" HtmlClass="">
+                      <Rules />
+                      <Label>
+                        <Content><![CDATA[]]></Content>
+                      </Label>
+                      <Style BackgroundColor="" Color="" Bold="False" Italic="False" />
+                      <Columns>
+                        <Column XPath="" HtmlClass="" WidthXS="0" WidthSM="0" WidthMD="12" WidthLG="0" Align="Left">
+                          <Controls>
+                            <ApplyTemplate Name="Config" XPath="" SectionName="" HtmlClass="">
+                              <Rules />
+                              <Parameters />
+                            </ApplyTemplate>
+                          </Controls>
+                        </Column>
+                      </Columns>
+                    </RowContent>
+                  </Controls>
+                </Tab>
+                <Tab XPath="DomainConfig" SectionName="Non Identity Config" HtmlClass="">
+                  <Rules />
+                  <Label>
+                    <Content><![CDATA[Domain Configuration]]></Content>
+                  </Label>
+                  <Controls>
+                    <RowContent Type="Section" Collapsing="None" FitHeight="False" XPath="" SectionName="" HtmlClass="">
+                      <Rules />
+                      <Label>
+                        <Content><![CDATA[]]></Content>
+                      </Label>
+                      <Style BackgroundColor="" Color="" Bold="False" Italic="False" />
+                      <Columns>
+                        <Column XPath="" HtmlClass="" WidthXS="0" WidthSM="0" WidthMD="12" WidthLG="0" Align="Left">
+                          <Controls>
+                            <ApplyTemplate Name="Config" XPath="" SectionName="" HtmlClass="">
+                              <Rules />
+                              <Parameters />
+                            </ApplyTemplate>
+                          </Controls>
+                        </Column>
+                      </Columns>
+                    </RowContent>
+                  </Controls>
+                </Tab>
+                <Tab XPath="IdentityConfig" SectionName="" HtmlClass="">
+                  <Rules />
+                  <Label>
+                    <Content><![CDATA[Identity Configuration]]></Content>
+                  </Label>
+                  <Controls>
+                    <RowContent Type="Section" Collapsing="None" FitHeight="False" XPath="Filter" SectionName="" HtmlClass="">
+                      <Rules />
+                      <Label>
+                        <Content><![CDATA[Identity]]></Content>
+                      </Label>
+                      <Style BackgroundColor="" Color="" Bold="False" Italic="False" />
+                      <Columns>
+                        <Column XPath="" HtmlClass="" WidthXS="0" WidthSM="0" WidthMD="12" WidthLG="0" Align="Left">
+                          <Controls>
+                            <IdentityPicker EnabledTypes="User, Group, Position, OrganizationUnit" ShowInternals="False" Size="Large" RequiredForGroup="IdentityConfig" XPath="Identity">
+                              <Hints><![CDATA[]]></Hints>
+                              <Rules />
+                              <PlaceHolder><![CDATA[]]></PlaceHolder>
+                              <Mappings />
+                            </IdentityPicker>
+                            <Message Type="Info" XPath="" SectionName="" HtmlClass="">
+                              <Rules />
+                              <Label>
+                                <Content><![CDATA[Choose an identity and select "Load Identity Config" action to load configuration.  ]]></Content>
+                              </Label>
+                            </Message>
+                          </Controls>
+                        </Column>
+                      </Columns>
+                    </RowContent>
+                    <RowContent Type="Section" Collapsing="None" FitHeight="False" XPath="Config" SectionName="" HtmlClass="">
+                      <Rules>
+                        <FormattingRule Hidden="True" Disabled="Inherit" BackgroundColor="" Color="" Bold="False" Italic="False" Enabled="True">
+                          <Condition>
+                            <Content><![CDATA[return !$Xml.EvaluateBoolean("../@Loaded");]]></Content>
+                          </Condition>
+                        </FormattingRule>
+                      </Rules>
+                      <Label>
+                        <Content><![CDATA[Configuration]]></Content>
+                      </Label>
+                      <Style BackgroundColor="" Color="" Bold="False" Italic="False" />
+                      <Columns>
+                        <Column XPath="" HtmlClass="" WidthXS="0" WidthSM="0" WidthMD="12" WidthLG="0" Align="Left">
+                          <Controls>
+                            <ApplyTemplate Name="Config" XPath="" SectionName="" HtmlClass="">
+                              <Rules>
+                                <FormattingRule Hidden="True" Disabled="Inherit" BackgroundColor="" Color="" Bold="False" Italic="False" Enabled="True">
+                                  <Condition>
+                                    <Content><![CDATA[return $Xml.IsEmpty("../Filter/Identity");]]></Content>
+                                  </Condition>
+                                </FormattingRule>
+                              </Rules>
+                              <Parameters />
+                            </ApplyTemplate>
+                          </Controls>
+                        </Column>
+                      </Columns>
+                    </RowContent>
+                  </Controls>
+                </Tab>
+                <Tab XPath="" SectionName="" HtmlClass="">
+                  <Rules />
+                  <Label>
+                    <Content><![CDATA[Test Pad]]></Content>
+                  </Label>
+                  <Controls>
+                    <RowContent Type="Section" Collapsing="None" FitHeight="False" XPath="TestPad" SectionName="" HtmlClass="">
+                      <Rules />
+                      <Label>
+                        <Content><![CDATA[Filter]]></Content>
+                      </Label>
+                      <Style BackgroundColor="" Color="" Bold="False" Italic="False" />
+                      <Columns>
+                        <Column XPath="" HtmlClass="" WidthXS="0" WidthSM="0" WidthMD="6" WidthLG="0" Align="Left">
+                          <Controls>
+                            <RowContent Type="Field" Collapsing="None" FitHeight="False" XPath="" SectionName="" HtmlClass="">
+                              <Rules />
+                              <Label>
+                                <Content><![CDATA[Config Key]]></Content>
+                              </Label>
+                              <Style BackgroundColor="" Color="" Bold="False" Italic="False" />
+                              <Columns>
+                                <Column XPath="" HtmlClass="" WidthXS="0" WidthSM="0" WidthMD="9" WidthLG="0" Align="Left">
+                                  <Controls>
+                                    <TextBox MaxLength="255" InputMask="" Type="Text" Size="Large" RequiredForGroup="" XPath="Key">
+                                      <Hints><![CDATA[]]></Hints>
+                                      <Rules />
+                                      <PlaceHolder><![CDATA[]]></PlaceHolder>
+                                    </TextBox>
+                                    <Message Type="Info" XPath="" SectionName="" HtmlClass="">
+                                      <Rules />
+                                      <Label>
+                                        <Content><![CDATA[e.g.: KEY-1, or GROUP-1\KEY-1]]></Content>
+                                      </Label>
+                                    </Message>
+                                  </Controls>
+                                </Column>
+                                <Column XPath="" HtmlClass="" WidthXS="0" WidthSM="0" WidthMD="3" WidthLG="0" Align="Left">
+                                  <Controls>
+                                    <Button ValidationGroup="" Icon="" HtmlClass="" XPath="">
+                                      <Hints><![CDATA[]]></Hints>
+                                      <Rules />
+                                      <Label>
+                                        <Content><![CDATA[Get Value]]></Content>
+                                      </Label>
+                                      <HandleScript>
+                                        <Content><![CDATA[Config.testConfigKeyAsync($Xml.Evaluate("Key"), $Xml.Evaluate("Identity"), $Xml.EvaluateBoolean("Inherit")).then(function (r) {
+    $Xml.SetValue("Result", JSON.stringify(r));
+})]]></Content>
+                                      </HandleScript>
+                                    </Button>
+                                  </Controls>
+                                </Column>
+                              </Columns>
+                            </RowContent>
+                          </Controls>
+                        </Column>
+                        <Column XPath="" HtmlClass="" WidthXS="0" WidthSM="0" WidthMD="6" WidthLG="0" Align="Left">
+                          <Controls>
+                            <RowContent Type="Field" Collapsing="None" FitHeight="False" XPath="" SectionName="" HtmlClass="">
+                              <Rules />
+                              <Label>
+                                <Content><![CDATA[Identity]]></Content>
+                              </Label>
+                              <Style BackgroundColor="" Color="" Bold="False" Italic="False" />
+                              <Columns>
+                                <Column XPath="" HtmlClass="" WidthXS="0" WidthSM="0" WidthMD="12" WidthLG="0" Align="Left">
+                                  <Controls>
+                                    <IdentityPicker EnabledTypes="User, Group, Position, OrganizationUnit" ShowInternals="False" Size="Large" RequiredForGroup="" XPath="Identity">
+                                      <Hints><![CDATA[]]></Hints>
+                                      <Rules />
+                                      <PlaceHolder><![CDATA[]]></PlaceHolder>
+                                      <Mappings />
+                                    </IdentityPicker>
+                                    <CheckBox CheckedValue="True" UncheckedValue="" XPath="Inherit">
+                                      <Hints><![CDATA[]]></Hints>
+                                      <Rules />
+                                      <Label>
+                                        <Content><![CDATA[Inherit domain config for identity]]></Content>
+                                      </Label>
+                                    </CheckBox>
+                                  </Controls>
+                                </Column>
+                              </Columns>
+                            </RowContent>
+                          </Controls>
+                        </Column>
+                      </Columns>
+                    </RowContent>
+                    <RowContent Type="Section" Collapsing="None" FitHeight="False" XPath="TestPad" SectionName="" HtmlClass="">
+                      <Rules />
+                      <Label>
+                        <Content><![CDATA[Result]]></Content>
+                      </Label>
+                      <Style BackgroundColor="" Color="" Bold="False" Italic="False" />
+                      <Columns>
+                        <Column XPath="" HtmlClass="" WidthXS="0" WidthSM="0" WidthMD="12" WidthLG="0" Align="Left">
+                          <Controls>
+                            <Message Type="Info" XPath="" SectionName="" HtmlClass="">
+                              <Rules />
+                              <Label>
+                                <Content><![CDATA[Usage: {{if Identity!='' then AltiKareUtils.Config.getIdentityConfig('{{Identity}}', '{{Key}}'{{if Inherit='True' then , true}}); else AltiKareUtils.Config.getConfig('{{Key}}');}}]]></Content>
+                              </Label>
+                            </Message>
+                            <Message Type="Info" XPath="" SectionName="" HtmlClass="">
+                              <Rules />
+                              <Label>
+                                <Content><![CDATA[You can specify context as first parameter. Otherwise, current context ({{@Context}}) will be used. Key parameters can also be sent as an array (e.g.: ['GROUP-1', 'KEY-1'])]]></Content>
+                              </Label>
+                            </Message>
+                            <HtmlBox RichEditor="False" ShowToolbar="True" Size="Large" RequiredForGroup="" XPath="Result">
+                              <Hints><![CDATA[]]></Hints>
+                              <Rules />
+                              <PlaceHolder><![CDATA[]]></PlaceHolder>
+                            </HtmlBox>
+                          </Controls>
+                        </Column>
+                      </Columns>
+                    </RowContent>
+                  </Controls>
+                </Tab>
+              </Tabs>
+              <ActiveTabXPath><![CDATA[]]></ActiveTabXPath>
+            </TabbedContent>
+          </Contents>
+          <Script>
+            <Content><![CDATA[window.isSetupLocked = function (node) {
+    var result;
+    while (!result && node) {
+        result = node.Evaluate("Permissions/LockSetup");
+        result === '' && (node = node.SelectSingle("../.."));
+    }
+    return result === 'true';
+};
+
+window.isValueLocked = function (node) {
+    var result;
+    while (!result && node) {
+        result = node.Evaluate("Permissions/LockValue");
+        result === '' && (node = node.SelectSingle("../.."));
+    }
+    return result === 'true';
+};]]></Content>
+          </Script>
+          <StyleSheet><![CDATA[// Checkbox lar 0.2em yukarı va sola çok yakın, düzelt.
+.fix-checkbox .ak-forms-checkbox  {
+    padding-top: 0.4em !important;
+    padding-left: 0.2em;
+}
+
+// TextBox'lar readonly olduğunda metin 0.2em yukarı kayıyor, düzelt.
+.ak-forms-textbox span.ak-forms-label {
+    line-height: 24px !important;
+}
+
+.fix-label .ak-forms-label {
+    line-height: 21px !important;
+}
+
+.ui-tablecontent-row-editorcommands > button > i {
+    opacity: 0.3;
+}]]></StyleSheet>
+        </Form>
+      </Forms>
+      <Variables>
+        <Variable Id="60047681-ef0f-4cdd-8432-5a0b2a07f834" Name="CONTEXT" Type="System.String"><![CDATA[]]></Variable>
+        <Variable Id="c8226fdc-b039-479c-bc59-38d0760bb9d1" Name="CONTEXT_NOTES" Type="System.String"><![CDATA[$CONTEXT variable is not available on client side calls (e.g.: ModuleScript methods called by form). If you plan to use client side calls  and read config values, create a "Config" named script module and set a variable (e.g: Config.CONTEXT='MY_PROCESS';)]]></Variable>
+      </Variables>
+      <Templates />
+    </Pool>
+  </Pools>
+  <Screens />
+  <FormTemplates>
+    <Template Name="Config" RootElement="ConfigList" NamespaceURI="" SectionName="" HtmlClass="">
+      <Contents>
+        <TableContent RequiredForGroup="" ShowBlankSlate="True" XPath="" SectionName="" HtmlClass="">
+          <Rules>
+            <FormattingRule Hidden="Inherit" Disabled="True" BackgroundColor="" Color="" Bold="False" Italic="False" Enabled="True">
+              <Condition>
+                <Content><![CDATA[return window.isSetupLocked && window.isSetupLocked($Xml.SelectSingle(".."));]]></Content>
+              </Condition>
+            </FormattingRule>
+          </Rules>
+          <ItemXPath><![CDATA[*]]></ItemXPath>
+          <RowIdXPath><![CDATA[]]></RowIdXPath>
+          <FilterXPath><![CDATA[]]></FilterXPath>
+          <SortXPath><![CDATA[]]></SortXPath>
+          <ItemsRootXPath><![CDATA[]]></ItemsRootXPath>
+          <AllowMovingXPath><![CDATA[count(../../Childs) > 0]]></AllowMovingXPath>
+          <AllowMoveUpDownXPath><![CDATA[]]></AllowMoveUpDownXPath>
+          <AllowNewXPath><![CDATA[]]></AllowNewXPath>
+          <AllowDeleteXPath><![CDATA[]]></AllowDeleteXPath>
+          <AllowDeleteAllXPath><![CDATA[0]]></AllowDeleteAllXPath>
+          <AddNewLabel>
+            <Content><![CDATA[]]></Content>
+          </AddNewLabel>
+          <MonitoredXPaths />
+          <BlankSlate />
+          <RowScript>
+            <Content><![CDATA[]]></Content>
+          </RowScript>
+          <DataExchange AllowImport="False" AllowExport="True">
+            <Columns />
+          </DataExchange>
+          <RowRules />
+          <HierarchyXPath><![CDATA[]]></HierarchyXPath>
+          <Columns>
+            <Column Width="32" MaxWidth="0" MinWidth="0" Align="Left" XPath="" SectionName="" HtmlClass="">
+              <Rules>
+                <FormattingRule Hidden="Inherit" Disabled="True" BackgroundColor="" Color="" Bold="False" Italic="False" Enabled="True">
+                  <Condition>
+                    <Content><![CDATA[return window.isSetupLocked && window.isSetupLocked($Xml);]]></Content>
+                  </Condition>
+                </FormattingRule>
+              </Rules>
+              <Label>
+                <Content><![CDATA[]]></Content>
+              </Label>
+              <Controls>
+                <TextBox MaxLength="255" InputMask="" Type="Text" Size="Large" RequiredForGroup="Save" XPath="Name">
+                  <Hints><![CDATA[]]></Hints>
+                  <Rules />
+                  <PlaceHolder><![CDATA[Enter config. name. (e.g.: Domain Url's)]]></PlaceHolder>
+                </TextBox>
+              </Controls>
+              <Footer>
+                <Content><![CDATA[]]></Content>
+              </Footer>
+            </Column>
+            <Column Width="0" MaxWidth="0" MinWidth="0" Align="Left" XPath="" SectionName="" HtmlClass="">
+              <Rules>
+                <FormattingRule Hidden="Inherit" Disabled="False" BackgroundColor="" Color="" Bold="False" Italic="False" Enabled="True">
+                  <Condition>
+                    <Content><![CDATA[return !window.isValueLocked || !window.isValueLocked($Xml);]]></Content>
+                  </Condition>
+                </FormattingRule>
+                <FormattingRule Hidden="Inherit" Disabled="True" BackgroundColor="" Color="" Bold="False" Italic="False" Enabled="True">
+                  <Condition>
+                    <Content><![CDATA[return window.isValueLocked && window.isValueLocked($Xml);]]></Content>
+                  </Condition>
+                </FormattingRule>
+              </Rules>
+              <Label>
+                <Content><![CDATA[]]></Content>
+              </Label>
+              <Controls>
+                <ApplyTemplate Name="InlineEditor" XPath="" SectionName="" HtmlClass="">
+                  <Rules />
+                  <Parameters />
+                </ApplyTemplate>
+              </Controls>
+              <Footer>
+                <Content><![CDATA[]]></Content>
+              </Footer>
+            </Column>
+          </Columns>
+          <Editor>
+            <ApplyTemplate Name="DetailEditor" XPath="" SectionName="" HtmlClass="">
+              <Rules>
+                <FormattingRule Hidden="True" Disabled="Inherit" BackgroundColor="" Color="" Bold="False" Italic="False" Enabled="False">
+                  <Condition>
+                    <Content><![CDATA[return ['TEXT', 'HTML'].indexOf($Xml.Evaluate("Type")) === -1;]]></Content>
+                  </Condition>
+                </FormattingRule>
+              </Rules>
+              <Parameters />
+            </ApplyTemplate>
+          </Editor>
+        </TableContent>
+      </Contents>
+    </Template>
+    <Template Name="InlineEditor" RootElement="ConfigEntry" NamespaceURI="" SectionName="" HtmlClass="">
+      <Contents>
+        <TextBox MaxLength="4096" InputMask="" Type="Text" Size="Large" RequiredForGroup="" XPath="Value">
+          <Hints><![CDATA[]]></Hints>
+          <Rules>
+            <FormattingRule Hidden="True" Disabled="Inherit" BackgroundColor="" Color="" Bold="False" Italic="False" Enabled="True">
+              <Condition>
+                <Content><![CDATA[var type = $Xml.Evaluate("../Type");
+var editorType = $Xml.Evaluate("../Setup/Type");
+
+return !((!type || type === 'TEXT') && (!editorType || editorType === 'STRING'));]]></Content>
+              </Condition>
+            </FormattingRule>
+          </Rules>
+          <PlaceHolder><![CDATA[]]></PlaceHolder>
+        </TextBox>
+        <NumericBox Decimals="0" ShowDigits="True" Size="Large" RequiredForGroup="" XPath="ValueAs/Number">
+          <Hints><![CDATA[]]></Hints>
+          <Rules>
+            <FormattingRule Hidden="True" Disabled="Inherit" BackgroundColor="" Color="" Bold="False" Italic="False" Enabled="True">
+              <Condition>
+                <Content><![CDATA[return !($Xml.Evaluate("../../Type") === 'NUMBER' && $Xml.Evaluate("../../Setup/Type") === 'INTEGER');]]></Content>
+              </Condition>
+            </FormattingRule>
+          </Rules>
+          <PlaceHolder><![CDATA[]]></PlaceHolder>
+        </NumericBox>
+        <NumericBox Decimals="2" ShowDigits="True" Size="Large" RequiredForGroup="" XPath="ValueAs/Number">
+          <Hints><![CDATA[]]></Hints>
+          <Rules>
+            <FormattingRule Hidden="True" Disabled="Inherit" BackgroundColor="" Color="" Bold="False" Italic="False" Enabled="True">
+              <Condition>
+                <Content><![CDATA[return !($Xml.Evaluate("../../Type") === 'NUMBER' && $Xml.Evaluate("../../Setup/Type") === 'DECIMAL2');]]></Content>
+              </Condition>
+            </FormattingRule>
+          </Rules>
+          <PlaceHolder><![CDATA[]]></PlaceHolder>
+        </NumericBox>
+        <NumericBox Decimals="3" ShowDigits="True" Size="Large" RequiredForGroup="" XPath="ValueAs/Number">
+          <Hints><![CDATA[]]></Hints>
+          <Rules>
+            <FormattingRule Hidden="True" Disabled="Inherit" BackgroundColor="" Color="" Bold="False" Italic="False" Enabled="True">
+              <Condition>
+                <Content><![CDATA[return !($Xml.Evaluate("../../Type") === 'NUMBER' && $Xml.Evaluate("../../Setup/Type") === 'DECIMAL3');]]></Content>
+              </Condition>
+            </FormattingRule>
+          </Rules>
+          <PlaceHolder><![CDATA[]]></PlaceHolder>
+        </NumericBox>
+        <NumericBox Decimals="4" ShowDigits="True" Size="Large" RequiredForGroup="" XPath="ValueAs/Number">
+          <Hints><![CDATA[]]></Hints>
+          <Rules>
+            <FormattingRule Hidden="True" Disabled="Inherit" BackgroundColor="" Color="" Bold="False" Italic="False" Enabled="True">
+              <Condition>
+                <Content><![CDATA[return !($Xml.Evaluate("../../Type") === 'NUMBER' && $Xml.Evaluate("../../Setup/Type") === 'DECIMAL4');]]></Content>
+              </Condition>
+            </FormattingRule>
+          </Rules>
+          <PlaceHolder><![CDATA[]]></PlaceHolder>
+        </NumericBox>
+        <NumericBox Decimals="5" ShowDigits="True" Size="Large" RequiredForGroup="" XPath="ValueAs/Number">
+          <Hints><![CDATA[]]></Hints>
+          <Rules>
+            <FormattingRule Hidden="True" Disabled="Inherit" BackgroundColor="" Color="" Bold="False" Italic="False" Enabled="True">
+              <Condition>
+                <Content><![CDATA[return !($Xml.Evaluate("../../Type") === 'NUMBER' && $Xml.Evaluate("../../Setup/Type") === 'DECIMAL5');]]></Content>
+              </Condition>
+            </FormattingRule>
+          </Rules>
+          <PlaceHolder><![CDATA[]]></PlaceHolder>
+        </NumericBox>
+        <NumericBox Decimals="6" ShowDigits="True" Size="Large" RequiredForGroup="" XPath="ValueAs/Number">
+          <Hints><![CDATA[]]></Hints>
+          <Rules>
+            <FormattingRule Hidden="True" Disabled="Inherit" BackgroundColor="" Color="" Bold="False" Italic="False" Enabled="True">
+              <Condition>
+                <Content><![CDATA[return !($Xml.Evaluate("../../Type") === 'NUMBER' && $Xml.Evaluate("../../Setup/Type") === 'DECIMAL6');]]></Content>
+              </Condition>
+            </FormattingRule>
+          </Rules>
+          <PlaceHolder><![CDATA[]]></PlaceHolder>
+        </NumericBox>
+        <NumericBox Decimals="16" ShowDigits="True" Size="Large" RequiredForGroup="" XPath="ValueAs/Number">
+          <Hints><![CDATA[]]></Hints>
+          <Rules>
+            <FormattingRule Hidden="True" Disabled="Inherit" BackgroundColor="" Color="" Bold="False" Italic="False" Enabled="True">
+              <Condition>
+                <Content><![CDATA[return !($Xml.Evaluate("../../Type") === 'NUMBER' && $Xml.Evaluate("../../Setup/Type") === 'DECIMAL');]]></Content>
+              </Condition>
+            </FormattingRule>
+          </Rules>
+          <PlaceHolder><![CDATA[]]></PlaceHolder>
+        </NumericBox>
+        <RowContent Type="Field" Collapsing="None" FitHeight="False" XPath="" SectionName="" HtmlClass="">
+          <Rules>
+            <FormattingRule Hidden="True" Disabled="Inherit" BackgroundColor="" Color="" Bold="False" Italic="False" Enabled="True">
+              <Condition>
+                <Content><![CDATA[return !($Xml.Evaluate("Type") === 'BOOL');]]></Content>
+              </Condition>
+            </FormattingRule>
+            <FormattingRule Hidden="Inherit" Disabled="Inherit" BackgroundColor="" Color="#9e9e9e" Bold="False" Italic="True" Enabled="True">
+              <Condition>
+                <Content><![CDATA[return $Xml.IsEmpty("ValueAs/Bool");]]></Content>
+              </Condition>
+            </FormattingRule>
+          </Rules>
+          <Label>
+            <Content><![CDATA[]]></Content>
+          </Label>
+          <Style BackgroundColor="" Color="" Bold="False" Italic="False" />
+          <Columns>
+            <Column XPath="" HtmlClass="fix-checkbox" WidthXS="0" WidthSM="0" WidthMD="12" WidthLG="0" Align="Left">
+              <Controls>
+                <CheckBox CheckedValue="true" UncheckedValue="false" XPath="ValueAs/Bool">
+                  <Hints><![CDATA[]]></Hints>
+                  <Rules />
+                  <Label>
+                    <Content><![CDATA[{{if Bool='true' then {{if ../Setup/BoolOptions/TrueCaption!='' then {{../Setup/BoolOptions/TrueCaption}} else true}}}}{{if Bool='false' then {{if ../Setup/BoolOptions/FalseCaption!='' then {{../Setup/BoolOptions/FalseCaption}} else false}}}}{{if Bool='' then Not Set}}]]></Content>
+                  </Label>
+                </CheckBox>
+              </Controls>
+            </Column>
+          </Columns>
+        </RowContent>
+        <DropDown Size="Large" AutoSelectValue="True" AllowNew="False" MapSelection="False" RequiredForGroup="" CacheDataSources="True" XPath="Value">
+          <Hints><![CDATA[]]></Hints>
+          <Rules>
+            <FormattingRule Hidden="True" Disabled="Inherit" BackgroundColor="" Color="" Bold="False" Italic="False" Enabled="True">
+              <Condition>
+                <Content><![CDATA[return $Xml.Evaluate("../Type") !== 'OPTION';]]></Content>
+              </Condition>
+            </FormattingRule>
+          </Rules>
+          <ValueXPath><![CDATA[]]></ValueXPath>
+          <CaptionXPath><![CDATA[]]></CaptionXPath>
+          <MappingXPath><![CDATA[]]></MappingXPath>
+          <DataSources>
+            <ScriptDataSource TextFormat="{{t}}" ValueFormat="{{v}}" Enabled="True">
+              <Mappings />
+              <Source>
+                <Content><![CDATA[return $Xml.SelectAll("Setup/OptionOptions/*", function() {
+    return { v: this.Evaluate("Value"), t: this.Evaluate("Caption") };
+});
+                ]]></Content>
+              </Source>
+            </ScriptDataSource>
+          </DataSources>
+          <MonitoredXPaths>
+            <XPath><![CDATA[Setup/OptionOptions]]></XPath>
+          </MonitoredXPaths>
+        </DropDown>
+        <TextBox MaxLength="4096" InputMask="" Type="Text" Size="Large" RequiredForGroup="" XPath="Value">
+          <Hints><![CDATA[e.g.: 2024-11-15T14:01:10.4003275+03:00]]></Hints>
+          <Rules>
+            <FormattingRule Hidden="True" Disabled="Inherit" BackgroundColor="" Color="" Bold="False" Italic="False" Enabled="True">
+              <Condition>
+                <Content><![CDATA[return !($Xml.Evaluate("../Type") === 'DATE');]]></Content>
+              </Condition>
+            </FormattingRule>
+          </Rules>
+          <PlaceHolder><![CDATA[]]></PlaceHolder>
+        </TextBox>
+        <TextBox MaxLength="4096" InputMask="" Type="Password" Size="Large" RequiredForGroup="" XPath="Value">
+          <Hints><![CDATA[]]></Hints>
+          <Rules>
+            <FormattingRule Hidden="True" Disabled="Inherit" BackgroundColor="" Color="" Bold="False" Italic="False" Enabled="True">
+              <Condition>
+                <Content><![CDATA[return $Xml.Evaluate("../Type") != 'PASSWORD';]]></Content>
+              </Condition>
+            </FormattingRule>
+          </Rules>
+          <PlaceHolder><![CDATA[]]></PlaceHolder>
+        </TextBox>
+        <File NameXPath="" RequiredForGroup="" CacheDataSources="True" AllowEdit="True" SetEditingRevision="False" XPath="ValueAs/File">
+          <Hints><![CDATA[]]></Hints>
+          <Rules>
+            <FormattingRule Hidden="True" Disabled="Inherit" BackgroundColor="" Color="" Bold="False" Italic="False" Enabled="True">
+              <Condition>
+                <Content><![CDATA[return $Xml.Evaluate("../../Type") != 'FILE';]]></Content>
+              </Condition>
+            </FormattingRule>
+          </Rules>
+          <DataSources />
+          <MonitoredXPaths />
+        </File>
+        <IdentityPicker EnabledTypes="User, Group, Position, OrganizationUnit" ShowInternals="False" Size="Large" RequiredForGroup="" XPath="ValueAs/Identity">
+          <Hints><![CDATA[]]></Hints>
+          <Rules>
+            <FormattingRule Hidden="True" Disabled="Inherit" BackgroundColor="" Color="" Bold="False" Italic="False" Enabled="True">
+              <Condition>
+                <Content><![CDATA[return $Xml.Evaluate("../../Type") != 'IDENTITY';]]></Content>
+              </Condition>
+            </FormattingRule>
+          </Rules>
+          <PlaceHolder><![CDATA[]]></PlaceHolder>
+          <Mappings />
+        </IdentityPicker>
+        <RowContent Type="Field" Collapsing="None" FitHeight="False" XPath="" SectionName="" HtmlClass="">
+          <Rules>
+            <FormattingRule Hidden="True" Disabled="Inherit" BackgroundColor="" Color="" Bold="False" Italic="False" Enabled="True">
+              <Condition>
+                <Content><![CDATA[var type = $Xml.Evaluate("Type");
+
+if (!type || type === "TEXT") {
+    var editorType = $Xml.Evaluate("Setup/Type");
+    return $Xml.Evaluate("../../Type") === 'LIST' || !editorType || editorType === 'STRING';
+}
+
+return ['NUMBER', 'BOOL', 'DATE', 'PASSWORD', 'FILE', 'IDENTITY', 'OPTION'].indexOf(type) !== -1;]]></Content>
+              </Condition>
+            </FormattingRule>
+          </Rules>
+          <Label>
+            <Content><![CDATA[]]></Content>
+          </Label>
+          <Style BackgroundColor="" Color="#bdbdbd" Bold="False" Italic="True" />
+          <Columns>
+            <Column XPath="" HtmlClass="fix-label" WidthXS="0" WidthSM="0" WidthMD="12" WidthLG="0" Align="Left">
+              <Controls>
+                <Label Style="">
+                  <Content><![CDATA[(Expand row to see details)]]></Content>
+                </Label>
+              </Controls>
+            </Column>
+          </Columns>
+        </RowContent>
+        <HtmlBox RichEditor="False" ShowToolbar="True" Size="Small" RequiredForGroup="" XPath="ValueAs/Text">
+          <Hints><![CDATA[]]></Hints>
+          <Rules>
+            <FormattingRule Hidden="True" Disabled="Inherit" BackgroundColor="" Color="" Bold="False" Italic="False" Enabled="True">
+              <Condition>
+                <Content><![CDATA[return $Xml.Evaluate("../../../../Type") != 'LIST' || !($Xml.Evaluate("../../Type") === 'TEXT' && $Xml.Evaluate("../../Setup/Type") === 'TEXT');]]></Content>
+              </Condition>
+            </FormattingRule>
+          </Rules>
+          <PlaceHolder><![CDATA[]]></PlaceHolder>
+        </HtmlBox>
+        <HtmlBox RichEditor="True" ShowToolbar="True" Size="Small" RequiredForGroup="" XPath="ValueAs/HTML">
+          <Hints><![CDATA[]]></Hints>
+          <Rules>
+            <FormattingRule Hidden="True" Disabled="Inherit" BackgroundColor="" Color="" Bold="False" Italic="False" Enabled="True">
+              <Condition>
+                <Content><![CDATA[return $Xml.Evaluate("../../../../Type") != 'LIST' || !($Xml.Evaluate("../../Type") === 'TEXT' && $Xml.Evaluate("../../Setup/Type") === 'HTML');]]></Content>
+              </Condition>
+            </FormattingRule>
+          </Rules>
+          <PlaceHolder><![CDATA[]]></PlaceHolder>
+        </HtmlBox>
+        <CodeBox Name="" Mode="Html" Size="Small" RequiredForGroup="" XPath="ValueAs/Object">
+          <Hints><![CDATA[]]></Hints>
+          <Rules>
+            <FormattingRule Hidden="True" Disabled="Inherit" BackgroundColor="" Color="" Bold="False" Italic="False" Enabled="True">
+              <Condition>
+                <Content><![CDATA[return $Xml.Evaluate("../../../../Type") != 'LIST' || $Xml.Evaluate("../../Type") !== 'OBJECT';]]></Content>
+              </Condition>
+            </FormattingRule>
+          </Rules>
+          <PlaceHolder><![CDATA[]]></PlaceHolder>
+          <Definitions />
+          <Arguments />
+        </CodeBox>
+      </Contents>
+    </Template>
+    <Template Name="DetailEditor" RootElement="ConfigEntry" NamespaceURI="" SectionName="" HtmlClass="">
+      <Contents>
+        <TabbedContent Mode="Horizontal" FitHeight="False" XPath="" SectionName="" HtmlClass="">
+          <Rules />
+          <Tabs>
+            <Tab XPath="" SectionName="" HtmlClass="">
+              <Rules>
+                <FormattingRule Hidden="True" Disabled="Inherit" BackgroundColor="" Color="" Bold="False" Italic="False" Enabled="True">
+                  <Condition>
+                    <Content><![CDATA[return $Xml.Evaluate("Type") !== 'GROUP';]]></Content>
+                  </Condition>
+                </FormattingRule>
+                <FormattingRule Hidden="Inherit" Disabled="True" BackgroundColor="" Color="" Bold="False" Italic="False" Enabled="True">
+                  <Condition>
+                    <Content><![CDATA[return window.isValueLocked && window.isValueLocked($Xml);]]></Content>
+                  </Condition>
+                </FormattingRule>
+              </Rules>
+              <Label>
+                <Content><![CDATA[Group Configuration]]></Content>
+              </Label>
+              <Controls>
+                <ApplyTemplate Name="Config" XPath="Childs" SectionName="" HtmlClass="">
+                  <Rules />
+                  <Parameters />
+                </ApplyTemplate>
+              </Controls>
+            </Tab>
+            <Tab XPath="" SectionName="" HtmlClass="">
+              <Rules>
+                <FormattingRule Hidden="True" Disabled="Inherit" BackgroundColor="" Color="" Bold="False" Italic="False" Enabled="True">
+                  <Condition>
+                    <Content><![CDATA[return !($Xml.Evaluate("Type") === 'TEXT' && $Xml.Evaluate("Setup/Type") === 'TEXT');]]></Content>
+                  </Condition>
+                </FormattingRule>
+                <FormattingRule Hidden="Inherit" Disabled="True" BackgroundColor="" Color="" Bold="False" Italic="False" Enabled="True">
+                  <Condition>
+                    <Content><![CDATA[return window.isValueLocked && window.isValueLocked($Xml);]]></Content>
+                  </Condition>
+                </FormattingRule>
+              </Rules>
+              <Label>
+                <Content><![CDATA[Text Value]]></Content>
+              </Label>
+              <Controls>
+                <HtmlBox RichEditor="False" ShowToolbar="True" Size="Large" RequiredForGroup="" XPath="ValueAs/Text">
+                  <Hints><![CDATA[]]></Hints>
+                  <Rules />
+                  <PlaceHolder><![CDATA[]]></PlaceHolder>
+                </HtmlBox>
+              </Controls>
+            </Tab>
+            <Tab XPath="" SectionName="" HtmlClass="">
+              <Rules>
+                <FormattingRule Hidden="True" Disabled="Inherit" BackgroundColor="" Color="" Bold="False" Italic="False" Enabled="True">
+                  <Condition>
+                    <Content><![CDATA[return !($Xml.Evaluate("Type") === 'TEXT' && $Xml.Evaluate("Setup/Type") === 'HTML');]]></Content>
+                  </Condition>
+                </FormattingRule>
+                <FormattingRule Hidden="Inherit" Disabled="True" BackgroundColor="" Color="" Bold="False" Italic="False" Enabled="True">
+                  <Condition>
+                    <Content><![CDATA[return window.isValueLocked && window.isValueLocked($Xml);]]></Content>
+                  </Condition>
+                </FormattingRule>
+              </Rules>
+              <Label>
+                <Content><![CDATA[Rich Text Value]]></Content>
+              </Label>
+              <Controls>
+                <HtmlBox RichEditor="True" ShowToolbar="True" Size="Large" RequiredForGroup="" XPath="ValueAs/HTML">
+                  <Hints><![CDATA[]]></Hints>
+                  <Rules />
+                  <PlaceHolder><![CDATA[]]></PlaceHolder>
+                </HtmlBox>
+              </Controls>
+            </Tab>
+            <Tab XPath="" SectionName="" HtmlClass="">
+              <Rules>
+                <FormattingRule Hidden="True" Disabled="Inherit" BackgroundColor="" Color="" Bold="False" Italic="False" Enabled="True">
+                  <Condition>
+                    <Content><![CDATA[return $Xml.Evaluate("Type") != 'LIST';]]></Content>
+                  </Condition>
+                </FormattingRule>
+                <FormattingRule Hidden="Inherit" Disabled="True" BackgroundColor="" Color="" Bold="False" Italic="False" Enabled="True">
+                  <Condition>
+                    <Content><![CDATA[return window.isValueLocked && window.isValueLocked($Xml);]]></Content>
+                  </Condition>
+                </FormattingRule>
+              </Rules>
+              <Label>
+                <Content><![CDATA[List]]></Content>
+              </Label>
+              <Controls>
+                <ApplyTemplate Name="ListEditor" XPath="" SectionName="" HtmlClass="">
+                  <Rules />
+                  <Parameters />
+                </ApplyTemplate>
+              </Controls>
+            </Tab>
+            <Tab XPath="" SectionName="" HtmlClass="">
+              <Rules>
+                <FormattingRule Hidden="True" Disabled="Inherit" BackgroundColor="" Color="" Bold="False" Italic="False" Enabled="True">
+                  <Condition>
+                    <Content><![CDATA[return $Xml.Evaluate("Type") !== 'OBJECT';]]></Content>
+                  </Condition>
+                </FormattingRule>
+                <FormattingRule Hidden="Inherit" Disabled="True" BackgroundColor="" Color="" Bold="False" Italic="False" Enabled="True">
+                  <Condition>
+                    <Content><![CDATA[return window.isValueLocked && window.isValueLocked($Xml);]]></Content>
+                  </Condition>
+                </FormattingRule>
+              </Rules>
+              <Label>
+                <Content><![CDATA[Object]]></Content>
+              </Label>
+              <Controls>
+                <CodeBox Name="" Mode="Html" Size="Big" RequiredForGroup="" XPath="ValueAs/Object">
+                  <Hints><![CDATA[]]></Hints>
+                  <Rules />
+                  <PlaceHolder><![CDATA[]]></PlaceHolder>
+                  <Definitions />
+                  <Arguments />
+                </CodeBox>
+              </Controls>
+            </Tab>
+            <Tab XPath="" SectionName="" HtmlClass="">
+              <Rules>
+                <FormattingRule Hidden="True" Disabled="Inherit" BackgroundColor="" Color="" Bold="False" Italic="False" Enabled="True">
+                  <Condition>
+                    <Content><![CDATA[// NOTE: Tabs with no rules are allways selected as default tab. Avoid it with this fake rule.
+return false;]]></Content>
+                  </Condition>
+                </FormattingRule>
+              </Rules>
+              <Label>
+                <Content><![CDATA[Description]]></Content>
+              </Label>
+              <Controls>
+                <HtmlBox RichEditor="True" ShowToolbar="True" Size="Small" RequiredForGroup="" XPath="Description">
+                  <Hints><![CDATA[]]></Hints>
+                  <Rules />
+                  <PlaceHolder><![CDATA[]]></PlaceHolder>
+                </HtmlBox>
+              </Controls>
+            </Tab>
+            <Tab XPath="" SectionName="" HtmlClass="">
+              <Rules>
+                <FormattingRule Hidden="True" Disabled="Inherit" BackgroundColor="" Color="" Bold="False" Italic="False" Enabled="True">
+                  <Condition>
+                    <Content><![CDATA[return ['DATE', 'PASSWORD', 'FILE', 'IDENTITY'].indexOf($Xml.Evaluate("../Type")) !== -1;]]></Content>
+                  </Condition>
+                </FormattingRule>
+              </Rules>
+              <Label>
+                <Content><![CDATA[Setup]]></Content>
+              </Label>
+              <Controls>
+                <RowContent Type="Section" Collapsing="Expanded" FitHeight="False" XPath="" SectionName="" HtmlClass="">
+                  <Rules>
+                    <FormattingRule Hidden="Inherit" Disabled="True" BackgroundColor="" Color="" Bold="False" Italic="False" Enabled="True">
+                      <Condition>
+                        <Content><![CDATA[return window.isSetupLocked && window.isSetupLocked($Xml);]]></Content>
+                      </Condition>
+                    </FormattingRule>
+                  </Rules>
+                  <Label>
+                    <Content><![CDATA[Configuration Key]]></Content>
+                  </Label>
+                  <Style BackgroundColor="" Color="" Bold="False" Italic="False" />
+                  <Columns>
+                    <Column XPath="" HtmlClass="" WidthXS="0" WidthSM="0" WidthMD="3" WidthLG="0" Align="Left">
+                      <Controls>
+                        <RowContent Type="Field" Collapsing="None" FitHeight="False" XPath="" SectionName="" HtmlClass="">
+                          <Rules />
+                          <Label>
+                            <Content><![CDATA[Key Type]]></Content>
+                          </Label>
+                          <Style BackgroundColor="" Color="" Bold="False" Italic="False" />
+                          <Columns>
+                            <Column XPath="" HtmlClass="" WidthXS="0" WidthSM="0" WidthMD="12" WidthLG="0" Align="Left">
+                              <Controls>
+                                <DropDown Size="Large" AutoSelectValue="True" AllowNew="False" MapSelection="False" RequiredForGroup="Save" CacheDataSources="True" XPath="Type">
+                                  <Hints><![CDATA[]]></Hints>
+                                  <Rules />
+                                  <ValueXPath><![CDATA[]]></ValueXPath>
+                                  <CaptionXPath><![CDATA[]]></CaptionXPath>
+                                  <MappingXPath><![CDATA[]]></MappingXPath>
+                                  <DataSources>
+                                    <ListItemDataSource TextFormat="{{Text}}" ValueFormat="{{Value}}" Enabled="True">
+                                      <Mappings />
+                                      <Items>
+                                        <Item>
+                                          <Text Type="System.String"><![CDATA[Text]]></Text>
+                                          <Value Type="System.String"><![CDATA[TEXT]]></Value>
+                                        </Item>
+                                        <Item>
+                                          <Text Type="System.String"><![CDATA[Number]]></Text>
+                                          <Value Type="System.String"><![CDATA[NUMBER]]></Value>
+                                        </Item>
+                                        <Item>
+                                          <Text Type="System.String"><![CDATA[Option]]></Text>
+                                          <Value Type="System.String"><![CDATA[OPTION]]></Value>
+                                        </Item>
+                                        <Item>
+                                          <Text Type="System.String"><![CDATA[Boolean]]></Text>
+                                          <Value Type="System.String"><![CDATA[BOOL]]></Value>
+                                        </Item>
+                                        <Item>
+                                          <Text Type="System.String"><![CDATA[Config. Group]]></Text>
+                                          <Value Type="System.String"><![CDATA[GROUP]]></Value>
+                                        </Item>
+                                        <Item>
+                                          <Text Type="System.String"><![CDATA[List]]></Text>
+                                          <Value Type="System.String"><![CDATA[LIST]]></Value>
+                                        </Item>
+                                        <Item>
+                                          <Text Type="System.String"><![CDATA[Object]]></Text>
+                                          <Value Type="System.String"><![CDATA[OBJECT]]></Value>
+                                        </Item>
+                                        <Item>
+                                          <Text Type="System.String"><![CDATA[Password]]></Text>
+                                          <Value Type="System.String"><![CDATA[PASSWORD]]></Value>
+                                        </Item>
+                                        <Item>
+                                          <Text Type="System.String"><![CDATA[File]]></Text>
+                                          <Value Type="System.String"><![CDATA[FILE]]></Value>
+                                        </Item>
+                                        <Item>
+                                          <Text Type="System.String"><![CDATA[Identity]]></Text>
+                                          <Value Type="System.String"><![CDATA[IDENTITY]]></Value>
+                                        </Item>
+                                        <Item>
+                                          <Text Type="System.String"><![CDATA[Date]]></Text>
+                                          <Value Type="System.String"><![CDATA[DATE]]></Value>
+                                        </Item>
+                                      </Items>
+                                    </ListItemDataSource>
+                                  </DataSources>
+                                  <MonitoredXPaths />
+                                </DropDown>
+                              </Controls>
+                            </Column>
+                          </Columns>
+                        </RowContent>
+                      </Controls>
+                    </Column>
+                    <Column XPath="" HtmlClass="" WidthXS="0" WidthSM="0" WidthMD="9" WidthLG="0" Align="Left">
+                      <Controls>
+                        <RowContent Type="Field" Collapsing="None" FitHeight="False" XPath="" SectionName="" HtmlClass="">
+                          <Rules />
+                          <Label>
+                            <Content><![CDATA[Key Value]]></Content>
+                          </Label>
+                          <Style BackgroundColor="" Color="" Bold="False" Italic="False" />
+                          <Columns>
+                            <Column XPath="" HtmlClass="" WidthXS="0" WidthSM="0" WidthMD="12" WidthLG="0" Align="Left">
+                              <Controls>
+                                <TextBox MaxLength="255" InputMask="" Type="Text" Size="Big" RequiredForGroup="Save" XPath="Key">
+                                  <Hints><![CDATA[]]></Hints>
+                                  <Rules />
+                                  <PlaceHolder><![CDATA[Enter config. key. (e.g.: DOMAIN_URLS)]]></PlaceHolder>
+                                </TextBox>
+                                <Button ValidationGroup="" Icon="magic" HtmlClass="" XPath="">
+                                  <Hints><![CDATA[]]></Hints>
+                                  <Rules>
+                                    <FormattingRule Hidden="True" Disabled="Inherit" BackgroundColor="" Color="" Bold="False" Italic="False" Enabled="True">
+                                      <Condition>
+                                        <Content><![CDATA[var key = $Xml.Evaluate("Key");
+return key === (key || $Xml.Evaluate("Name"))
+    .replace(/<[^>]*>/g, ' ') // Remove xml tags
+    .replace(/[Ğğ]/g, 'G')
+    .replace(/[Üü]/g, 'U')
+    .replace(/[Şş]/g, 'S')
+    .replace(/[Iİı]/g, 'I')
+    .replace(/[Öö]/g, 'O')
+    .replace(/[Çç]/g, 'C')
+    .toUpperCase()
+    .replace(/['’`]/g, '')
+    .replace(/[^A-Z^0-9\s[\]@~:.]/g, ' ')
+    .replace(/\s{2,}/g, ' ')
+    .trim()
+    .replace(/\s/g, '_');]]></Content>
+                                      </Condition>
+                                    </FormattingRule>
+                                  </Rules>
+                                  <Label>
+                                    <Content><![CDATA[{{if Key!='' then To: PROPPER_KEY else Generate Key}}]]></Content>
+                                  </Label>
+                                  <HandleScript>
+                                    <Content><![CDATA[$Xml.SetValue("Key", ($Xml.Evaluate("Key") || $Xml.Evaluate("Name"))
+    .replace(/<[^>]*>/g, ' ') // Remove xml tags
+    .replace(/[Ğğ]/g, 'G')
+    .replace(/[Üü]/g, 'U')
+    .replace(/[Şş]/g, 'S')
+    .replace(/[Iİı]/g, 'I')
+    .replace(/[Öö]/g, 'O')
+    .replace(/[Çç]/g, 'C')
+    .toUpperCase()
+    .replace(/['’`]/g, '')
+    .replace(/[^A-Z^0-9\s[\]@~:.]/g, ' ')
+    .replace(/\s{2,}/g, ' ')
+    .trim()
+    .replace(/\s/g, '_')
+);]]></Content>
+                                  </HandleScript>
+                                </Button>
+                                <Message Type="Info" XPath="" SectionName="" HtmlClass="">
+                                  <Rules>
+                                    <FormattingRule Hidden="True" Disabled="Inherit" BackgroundColor="" Color="" Bold="False" Italic="False" Enabled="True">
+                                      <Condition>
+                                        <Content><![CDATA[return !$Xml.IsEmpty("Key");]]></Content>
+                                      </Condition>
+                                    </FormattingRule>
+                                  </Rules>
+                                  <Label>
+                                    <Content><![CDATA[For Key value, use UPPER_CASE words with underscore for better standardisation.]]></Content>
+                                  </Label>
+                                </Message>
+                              </Controls>
+                            </Column>
+                          </Columns>
+                        </RowContent>
+                      </Controls>
+                    </Column>
+                  </Columns>
+                </RowContent>
+                <RowContent Type="Section" Collapsing="Expanded" FitHeight="False" XPath="" SectionName="" HtmlClass="">
+                  <Rules>
+                    <FormattingRule Hidden="Inherit" Disabled="True" BackgroundColor="" Color="" Bold="False" Italic="False" Enabled="True">
+                      <Condition>
+                        <Content><![CDATA[return window.isSetupLocked && window.isSetupLocked($Xml);]]></Content>
+                      </Condition>
+                    </FormattingRule>
+                  </Rules>
+                  <Label>
+                    <Content><![CDATA[Editor Settings]]></Content>
+                  </Label>
+                  <Style BackgroundColor="" Color="" Bold="False" Italic="False" />
+                  <Columns>
+                    <Column XPath="" HtmlClass="" WidthXS="0" WidthSM="0" WidthMD="12" WidthLG="0" Align="Left">
+                      <Controls>
+                        <ApplyTemplate Name="EditorSetup" XPath="Setup" SectionName="" HtmlClass="">
+                          <Rules />
+                          <Parameters />
+                        </ApplyTemplate>
+                      </Controls>
+                    </Column>
+                  </Columns>
+                </RowContent>
+                <RowContent Type="Section" Collapsing="Collapsed" FitHeight="False" XPath="Permissions" SectionName="" HtmlClass="">
+                  <Rules />
+                  <Label>
+                    <Content><![CDATA[Permissions]]></Content>
+                  </Label>
+                  <Style BackgroundColor="" Color="" Bold="False" Italic="False" />
+                  <Columns>
+                    <Column XPath="" HtmlClass="" WidthXS="0" WidthSM="0" WidthMD="6" WidthLG="0" Align="Left">
+                      <Controls>
+                        <RowContent Type="Field" Collapsing="None" FitHeight="False" XPath="" SectionName="" HtmlClass="">
+                          <Rules />
+                          <Label>
+                            <Content><![CDATA[Setup]]></Content>
+                          </Label>
+                          <Style BackgroundColor="" Color="" Bold="False" Italic="False" />
+                          <Columns>
+                            <Column XPath="" HtmlClass="" WidthXS="0" WidthSM="0" WidthMD="12" WidthLG="0" Align="Left">
+                              <Controls>
+                                <DropDown Size="Large" AutoSelectValue="True" AllowNew="False" MapSelection="False" RequiredForGroup="" CacheDataSources="True" XPath="LockSetup">
+                                  <Hints><![CDATA[]]></Hints>
+                                  <Rules />
+                                  <ValueXPath><![CDATA[]]></ValueXPath>
+                                  <CaptionXPath><![CDATA[]]></CaptionXPath>
+                                  <MappingXPath><![CDATA[]]></MappingXPath>
+                                  <DataSources>
+                                    <ListItemDataSource TextFormat="{{Text}}" ValueFormat="{{Value}}" Enabled="True">
+                                      <Mappings />
+                                      <Items>
+                                        <Item>
+                                          <Text Type="System.String"><![CDATA[Inherit setup change permissions]]></Text>
+                                          <Value Type="System.String"><![CDATA[]]></Value>
+                                        </Item>
+                                        <Item>
+                                          <Text Type="System.String"><![CDATA[Allow setup to be changed]]></Text>
+                                          <Value Type="System.String"><![CDATA[false]]></Value>
+                                        </Item>
+                                        <Item>
+                                          <Text Type="System.String"><![CDATA[Lock setup]]></Text>
+                                          <Value Type="System.String"><![CDATA[true]]></Value>
+                                        </Item>
+                                      </Items>
+                                    </ListItemDataSource>
+                                  </DataSources>
+                                  <MonitoredXPaths />
+                                </DropDown>
+                              </Controls>
+                            </Column>
+                          </Columns>
+                        </RowContent>
+                      </Controls>
+                    </Column>
+                    <Column XPath="" HtmlClass="" WidthXS="0" WidthSM="0" WidthMD="6" WidthLG="0" Align="Left">
+                      <Controls>
+                        <RowContent Type="Field" Collapsing="None" FitHeight="False" XPath="" SectionName="" HtmlClass="">
+                          <Rules />
+                          <Label>
+                            <Content><![CDATA[Value]]></Content>
+                          </Label>
+                          <Style BackgroundColor="" Color="" Bold="False" Italic="False" />
+                          <Columns>
+                            <Column XPath="" HtmlClass="" WidthXS="0" WidthSM="0" WidthMD="12" WidthLG="0" Align="Left">
+                              <Controls>
+                                <DropDown Size="Large" AutoSelectValue="True" AllowNew="False" MapSelection="False" RequiredForGroup="" CacheDataSources="True" XPath="LockValue">
+                                  <Hints><![CDATA[]]></Hints>
+                                  <Rules />
+                                  <ValueXPath><![CDATA[]]></ValueXPath>
+                                  <CaptionXPath><![CDATA[]]></CaptionXPath>
+                                  <MappingXPath><![CDATA[]]></MappingXPath>
+                                  <DataSources>
+                                    <ListItemDataSource TextFormat="{{Text}}" ValueFormat="{{Value}}" Enabled="True">
+                                      <Mappings />
+                                      <Items>
+                                        <Item>
+                                          <Text Type="System.String"><![CDATA[Inherit edit permissions]]></Text>
+                                          <Value Type="System.String"><![CDATA[]]></Value>
+                                        </Item>
+                                        <Item>
+                                          <Text Type="System.String"><![CDATA[Allow setup to be edited]]></Text>
+                                          <Value Type="System.String"><![CDATA[false]]></Value>
+                                        </Item>
+                                        <Item>
+                                          <Text Type="System.String"><![CDATA[Lock value]]></Text>
+                                          <Value Type="System.String"><![CDATA[true]]></Value>
+                                        </Item>
+                                      </Items>
+                                    </ListItemDataSource>
+                                  </DataSources>
+                                  <MonitoredXPaths />
+                                </DropDown>
+                              </Controls>
+                            </Column>
+                          </Columns>
+                        </RowContent>
+                      </Controls>
+                    </Column>
+                  </Columns>
+                </RowContent>
+              </Controls>
+            </Tab>
+          </Tabs>
+          <ActiveTabXPath><![CDATA[]]></ActiveTabXPath>
+        </TabbedContent>
+      </Contents>
+    </Template>
+    <Template Name="ListEditor" RootElement="ConfigEntry" NamespaceURI="" SectionName="" HtmlClass="">
+      <Contents>
+        <TableContent RequiredForGroup="" ShowBlankSlate="True" XPath="Childs" SectionName="" HtmlClass="">
+          <Rules />
+          <ItemXPath><![CDATA[*]]></ItemXPath>
+          <RowIdXPath><![CDATA[]]></RowIdXPath>
+          <FilterXPath><![CDATA[]]></FilterXPath>
+          <SortXPath><![CDATA[]]></SortXPath>
+          <ItemsRootXPath><![CDATA[]]></ItemsRootXPath>
+          <AllowMovingXPath><![CDATA[1]]></AllowMovingXPath>
+          <AllowMoveUpDownXPath><![CDATA[]]></AllowMoveUpDownXPath>
+          <AllowNewXPath><![CDATA[]]></AllowNewXPath>
+          <AllowDeleteXPath><![CDATA[]]></AllowDeleteXPath>
+          <AllowDeleteAllXPath><![CDATA[]]></AllowDeleteAllXPath>
+          <AddNewLabel>
+            <Content><![CDATA[]]></Content>
+          </AddNewLabel>
+          <MonitoredXPaths>
+            <XPath><![CDATA[../../Setup/ListItemType]]></XPath>
+            <XPath><![CDATA[../../Setup/Type]]></XPath>
+          </MonitoredXPaths>
+          <BlankSlate />
+          <RowScript>
+            <Content><![CDATA[]]></Content>
+          </RowScript>
+          <DataExchange AllowImport="False" AllowExport="True">
+            <Columns />
+          </DataExchange>
+          <RowRules />
+          <HierarchyXPath><![CDATA[]]></HierarchyXPath>
+          <Columns>
+            <Column Width="0" MaxWidth="0" MinWidth="0" Align="Left" XPath="" SectionName="" HtmlClass="">
+              <Rules />
+              <Label>
+                <Content><![CDATA[]]></Content>
+              </Label>
+              <Controls>
+                <ApplyTemplate Name="InlineEditor" XPath="" SectionName="" HtmlClass="">
+                  <Rules />
+                  <Parameters />
+                </ApplyTemplate>
+              </Controls>
+              <Footer>
+                <Content><![CDATA[]]></Content>
+              </Footer>
+            </Column>
+          </Columns>
+          <Editor />
+        </TableContent>
+      </Contents>
+    </Template>
+    <Template Name="EditorSetup" RootElement="EditorSetupType" NamespaceURI="" SectionName="" HtmlClass="">
+      <Contents>
+        <RowContent Type="Field" Collapsing="None" FitHeight="False" XPath="" SectionName="" HtmlClass="">
+          <Rules>
+            <FormattingRule Hidden="True" Disabled="Inherit" BackgroundColor="" Color="" Bold="False" Italic="False" Enabled="True">
+              <Condition>
+                <Content><![CDATA[if ($Xml.Evaluate("../Type") === 'LIST') {
+    var listItemType = $Xml.Evaluate("ListItemType");
+    var editorType = $Xml.Evaluate("Type");
+    $Xml.SelectAll("../Childs/*", function () {
+        if (this.Evaluate("Type") != listItemType)
+            this.SetValue("Type", listItemType);
+        if (this.Evaluate("Setup/Type") != editorType)
+            this.SetValue("Setup/Type", editorType);
+    });
+    return false;
+}
+
+return true;]]></Content>
+              </Condition>
+            </FormattingRule>
+          </Rules>
+          <Label>
+            <Content><![CDATA[List Item Type]]></Content>
+          </Label>
+          <Style BackgroundColor="" Color="" Bold="False" Italic="False" />
+          <Columns>
+            <Column XPath="" HtmlClass="" WidthXS="0" WidthSM="0" WidthMD="12" WidthLG="0" Align="Left">
+              <Controls>
+                <DropDown Size="Large" AutoSelectValue="True" AllowNew="False" MapSelection="False" RequiredForGroup="" CacheDataSources="True" XPath="ListItemType">
+                  <Hints><![CDATA[]]></Hints>
+                  <Rules />
+                  <ValueXPath><![CDATA[]]></ValueXPath>
+                  <CaptionXPath><![CDATA[]]></CaptionXPath>
+                  <MappingXPath><![CDATA[]]></MappingXPath>
+                  <DataSources>
+                    <ListItemDataSource TextFormat="{{Text}}" ValueFormat="{{Value}}" Enabled="True">
+                      <Mappings />
+                      <Items>
+                        <Item>
+                          <Text Type="System.String"><![CDATA[Text]]></Text>
+                          <Value Type="System.String"><![CDATA[TEXT]]></Value>
+                        </Item>
+                        <Item>
+                          <Text Type="System.String"><![CDATA[Number]]></Text>
+                          <Value Type="System.String"><![CDATA[NUMBER]]></Value>
+                        </Item>
+                        <Item>
+                          <Text Type="System.String"><![CDATA[File]]></Text>
+                          <Value Type="System.String"><![CDATA[FILE]]></Value>
+                        </Item>
+                        <Item>
+                          <Text Type="System.String"><![CDATA[Identity]]></Text>
+                          <Value Type="System.String"><![CDATA[IDENTITY]]></Value>
+                        </Item>
+                      </Items>
+                    </ListItemDataSource>
+                  </DataSources>
+                  <MonitoredXPaths />
+                </DropDown>
+              </Controls>
+            </Column>
+          </Columns>
+        </RowContent>
+        <RowContent Type="Field" Collapsing="None" FitHeight="False" XPath="" SectionName="" HtmlClass="">
+          <Rules>
+            <FormattingRule Hidden="True" Disabled="Inherit" BackgroundColor="" Color="" Bold="False" Italic="False" Enabled="True">
+              <Condition>
+                <Content><![CDATA[return !($Xml.Evaluate("../Type") === 'TEXT' || ($Xml.Evaluate("../Type") === 'LIST' && $Xml.Evaluate("ListItemType") === 'TEXT'));]]></Content>
+              </Condition>
+            </FormattingRule>
+          </Rules>
+          <Label>
+            <Content><![CDATA[Text Settings]]></Content>
+          </Label>
+          <Style BackgroundColor="" Color="" Bold="False" Italic="False" />
+          <Columns>
+            <Column XPath="" HtmlClass="" WidthXS="0" WidthSM="0" WidthMD="12" WidthLG="0" Align="Left">
+              <Controls>
+                <DropDown Size="Large" AutoSelectValue="True" AllowNew="False" MapSelection="False" RequiredForGroup="" CacheDataSources="True" XPath="Type">
+                  <Hints><![CDATA[]]></Hints>
+                  <Rules />
+                  <ValueXPath><![CDATA[]]></ValueXPath>
+                  <CaptionXPath><![CDATA[]]></CaptionXPath>
+                  <MappingXPath><![CDATA[]]></MappingXPath>
+                  <DataSources>
+                    <ListItemDataSource TextFormat="{{Text}}" ValueFormat="{{Value}}" Enabled="True">
+                      <Mappings />
+                      <Items>
+                        <Item>
+                          <Text Type="System.String"><![CDATA[Text (Single Line)]]></Text>
+                          <Value Type="System.String"><![CDATA[STRING]]></Value>
+                        </Item>
+                        <Item>
+                          <Text Type="System.String"><![CDATA[Text (Long - Multi Line)]]></Text>
+                          <Value Type="System.String"><![CDATA[TEXT]]></Value>
+                        </Item>
+                        <Item>
+                          <Text Type="System.String"><![CDATA[Text (Rich Text - HTML)]]></Text>
+                          <Value Type="System.String"><![CDATA[HTML]]></Value>
+                        </Item>
+                      </Items>
+                    </ListItemDataSource>
+                  </DataSources>
+                  <MonitoredXPaths />
+                </DropDown>
+              </Controls>
+            </Column>
+          </Columns>
+        </RowContent>
+        <RowContent Type="Field" Collapsing="None" FitHeight="False" XPath="" SectionName="" HtmlClass="">
+          <Rules>
+            <FormattingRule Hidden="True" Disabled="Inherit" BackgroundColor="" Color="" Bold="False" Italic="False" Enabled="True">
+              <Condition>
+                <Content><![CDATA[return !($Xml.Evaluate("../Type") === 'NUMBER' || ($Xml.Evaluate("../Type") === 'LIST' && $Xml.Evaluate("ListItemType") === 'NUMBER'));]]></Content>
+              </Condition>
+            </FormattingRule>
+          </Rules>
+          <Label>
+            <Content><![CDATA[Number Settings]]></Content>
+          </Label>
+          <Style BackgroundColor="" Color="" Bold="False" Italic="False" />
+          <Columns>
+            <Column XPath="" HtmlClass="" WidthXS="0" WidthSM="0" WidthMD="12" WidthLG="0" Align="Left">
+              <Controls>
+                <DropDown Size="Large" AutoSelectValue="True" AllowNew="False" MapSelection="False" RequiredForGroup="" CacheDataSources="True" XPath="Type">
+                  <Hints><![CDATA[]]></Hints>
+                  <Rules />
+                  <ValueXPath><![CDATA[]]></ValueXPath>
+                  <CaptionXPath><![CDATA[]]></CaptionXPath>
+                  <MappingXPath><![CDATA[]]></MappingXPath>
+                  <DataSources>
+                    <ListItemDataSource TextFormat="{{Text}}" ValueFormat="{{Value}}" Enabled="True">
+                      <Mappings />
+                      <Items>
+                        <Item>
+                          <Text Type="System.String"><![CDATA[Integer]]></Text>
+                          <Value Type="System.String"><![CDATA[INTEGER]]></Value>
+                        </Item>
+                        <Item>
+                          <Text Type="System.String"><![CDATA[Decimal (1 digit)]]></Text>
+                          <Value Type="System.String"><![CDATA[DECIMAL1]]></Value>
+                        </Item>
+                        <Item>
+                          <Text Type="System.String"><![CDATA[Decimal (2 digits)]]></Text>
+                          <Value Type="System.String"><![CDATA[DECIMAL2]]></Value>
+                        </Item>
+                        <Item>
+                          <Text Type="System.String"><![CDATA[Decimal (3 digits)]]></Text>
+                          <Value Type="System.String"><![CDATA[DECIMAL3]]></Value>
+                        </Item>
+                        <Item>
+                          <Text Type="System.String"><![CDATA[Decimal (4 digits)]]></Text>
+                          <Value Type="System.String"><![CDATA[DECIMAL4]]></Value>
+                        </Item>
+                        <Item>
+                          <Text Type="System.String"><![CDATA[Decimal (5 digits)]]></Text>
+                          <Value Type="System.String"><![CDATA[DECIMAL5]]></Value>
+                        </Item>
+                        <Item>
+                          <Text Type="System.String"><![CDATA[Decimal (6 digits)]]></Text>
+                          <Value Type="System.String"><![CDATA[DECIMAL6]]></Value>
+                        </Item>
+                        <Item>
+                          <Text Type="System.String"><![CDATA[Decimal]]></Text>
+                          <Value Type="System.String"><![CDATA[DECIMAL]]></Value>
+                        </Item>
+                      </Items>
+                    </ListItemDataSource>
+                  </DataSources>
+                  <MonitoredXPaths />
+                </DropDown>
+              </Controls>
+            </Column>
+          </Columns>
+        </RowContent>
+        <RowContent Type="Field" Collapsing="None" FitHeight="False" XPath="" SectionName="" HtmlClass="">
+          <Rules>
+            <FormattingRule Hidden="True" Disabled="Inherit" BackgroundColor="" Color="" Bold="False" Italic="False" Enabled="True">
+              <Condition>
+                <Content><![CDATA[return !($Xml.Evaluate("../Type") === 'BOOL' || ($Xml.Evaluate("../Type") === 'LIST' && $Xml.Evaluate("ListItemType") === 'BOOL'));]]></Content>
+              </Condition>
+            </FormattingRule>
+          </Rules>
+          <Label>
+            <Content><![CDATA[]]></Content>
+          </Label>
+          <Style BackgroundColor="" Color="" Bold="False" Italic="False" />
+          <Columns>
+            <Column XPath="" HtmlClass="" WidthXS="0" WidthSM="0" WidthMD="4" WidthLG="0" Align="Left">
+              <Controls>
+                <RowContent Type="Field" Collapsing="None" FitHeight="False" XPath="" SectionName="" HtmlClass="">
+                  <Rules />
+                  <Label>
+                    <Content><![CDATA[Checked (true) Caption]]></Content>
+                  </Label>
+                  <Style BackgroundColor="" Color="" Bold="False" Italic="False" />
+                  <Columns>
+                    <Column XPath="" HtmlClass="" WidthXS="0" WidthSM="0" WidthMD="12" WidthLG="0" Align="Left">
+                      <Controls>
+                        <TextBox MaxLength="255" InputMask="" Type="Text" Size="Large" RequiredForGroup="" XPath="BoolOptions/TrueCaption">
+                          <Hints><![CDATA[]]></Hints>
+                          <Rules />
+                          <PlaceHolder><![CDATA[]]></PlaceHolder>
+                        </TextBox>
+                      </Controls>
+                    </Column>
+                  </Columns>
+                </RowContent>
+              </Controls>
+            </Column>
+            <Column XPath="" HtmlClass="" WidthXS="0" WidthSM="0" WidthMD="4" WidthLG="0" Align="Left">
+              <Controls>
+                <RowContent Type="Field" Collapsing="None" FitHeight="False" XPath="" SectionName="" HtmlClass="">
+                  <Rules />
+                  <Label>
+                    <Content><![CDATA[Unchecked (false) Caption]]></Content>
+                  </Label>
+                  <Style BackgroundColor="" Color="" Bold="False" Italic="False" />
+                  <Columns>
+                    <Column XPath="" HtmlClass="" WidthXS="0" WidthSM="0" WidthMD="12" WidthLG="0" Align="Left">
+                      <Controls>
+                        <TextBox MaxLength="255" InputMask="" Type="Text" Size="Large" RequiredForGroup="" XPath="BoolOptions/FalseCaption">
+                          <Hints><![CDATA[]]></Hints>
+                          <Rules />
+                          <PlaceHolder><![CDATA[]]></PlaceHolder>
+                        </TextBox>
+                      </Controls>
+                    </Column>
+                  </Columns>
+                </RowContent>
+              </Controls>
+            </Column>
+            <Column XPath="" HtmlClass="" WidthXS="0" WidthSM="0" WidthMD="4" WidthLG="0" Align="Left">
+              <Controls>
+                <RowContent Type="Field" Collapsing="None" FitHeight="False" XPath="" SectionName="" HtmlClass="">
+                  <Rules />
+                  <Label>
+                    <Content><![CDATA[ ]]></Content>
+                  </Label>
+                  <Style BackgroundColor="" Color="" Bold="False" Italic="False" />
+                  <Columns>
+                    <Column XPath="" HtmlClass="" WidthXS="0" WidthSM="0" WidthMD="12" WidthLG="0" Align="Left">
+                      <Controls>
+                        <Button ValidationGroup="" Icon="times-rectangle-o" HtmlClass="" XPath="">
+                          <Hints><![CDATA[]]></Hints>
+                          <Rules />
+                          <Label>
+                            <Content><![CDATA[Clear Check State]]></Content>
+                          </Label>
+                          <HandleScript>
+                            <Content><![CDATA[$Xml.SetValue("../ValueAs/Bool", "");]]></Content>
+                          </HandleScript>
+                        </Button>
+                      </Controls>
+                    </Column>
+                  </Columns>
+                </RowContent>
+              </Controls>
+            </Column>
+          </Columns>
+        </RowContent>
+        <RowContent Type="Field" Collapsing="None" FitHeight="False" XPath="OptionOptions" SectionName="" HtmlClass="">
+          <Rules>
+            <FormattingRule Hidden="True" Disabled="Inherit" BackgroundColor="" Color="" Bold="False" Italic="False" Enabled="True">
+              <Condition>
+                <Content><![CDATA[return !($Xml.Evaluate("../../Type") === 'OPTION' || ($Xml.Evaluate("../../Type") === 'LIST' && $Xml.Evaluate("../ListItemType") === 'OPTION'));]]></Content>
+              </Condition>
+            </FormattingRule>
+          </Rules>
+          <Label>
+            <Content><![CDATA[Available Options]]></Content>
+          </Label>
+          <Style BackgroundColor="" Color="" Bold="False" Italic="False" />
+          <Columns>
+            <Column XPath="" HtmlClass="" WidthXS="0" WidthSM="0" WidthMD="12" WidthLG="0" Align="Left">
+              <Controls>
+                <TableContent RequiredForGroup="" ShowBlankSlate="True" XPath="" SectionName="" HtmlClass="">
+                  <Rules />
+                  <ItemXPath><![CDATA[*]]></ItemXPath>
+                  <RowIdXPath><![CDATA[]]></RowIdXPath>
+                  <FilterXPath><![CDATA[]]></FilterXPath>
+                  <SortXPath><![CDATA[]]></SortXPath>
+                  <ItemsRootXPath><![CDATA[]]></ItemsRootXPath>
+                  <AllowMovingXPath><![CDATA[1]]></AllowMovingXPath>
+                  <AllowMoveUpDownXPath><![CDATA[]]></AllowMoveUpDownXPath>
+                  <AllowNewXPath><![CDATA[]]></AllowNewXPath>
+                  <AllowDeleteXPath><![CDATA[]]></AllowDeleteXPath>
+                  <AllowDeleteAllXPath><![CDATA[]]></AllowDeleteAllXPath>
+                  <AddNewLabel>
+                    <Content><![CDATA[]]></Content>
+                  </AddNewLabel>
+                  <MonitoredXPaths />
+                  <BlankSlate />
+                  <RowScript>
+                    <Content><![CDATA[]]></Content>
+                  </RowScript>
+                  <DataExchange AllowImport="False" AllowExport="True">
+                    <Columns />
+                  </DataExchange>
+                  <RowRules />
+                  <HierarchyXPath><![CDATA[]]></HierarchyXPath>
+                  <Columns>
+                    <Column Width="30" MaxWidth="0" MinWidth="0" Align="Left" XPath="" SectionName="" HtmlClass="">
+                      <Rules />
+                      <Label>
+                        <Content><![CDATA[Value]]></Content>
+                      </Label>
+                      <Controls>
+                        <TextBox MaxLength="255" InputMask="" Type="Text" Size="Large" RequiredForGroup="" XPath="Value">
+                          <Hints><![CDATA[]]></Hints>
+                          <Rules />
+                          <PlaceHolder><![CDATA[]]></PlaceHolder>
+                        </TextBox>
+                      </Controls>
+                      <Footer>
+                        <Content><![CDATA[]]></Content>
+                      </Footer>
+                    </Column>
+                    <Column Width="0" MaxWidth="0" MinWidth="0" Align="Left" XPath="" SectionName="" HtmlClass="">
+                      <Rules />
+                      <Label>
+                        <Content><![CDATA[Caption]]></Content>
+                      </Label>
+                      <Controls>
+                        <TextBox MaxLength="255" InputMask="" Type="Text" Size="Large" RequiredForGroup="" XPath="Caption">
+                          <Hints><![CDATA[]]></Hints>
+                          <Rules />
+                          <PlaceHolder><![CDATA[]]></PlaceHolder>
+                        </TextBox>
+                      </Controls>
+                      <Footer>
+                        <Content><![CDATA[]]></Content>
+                      </Footer>
+                    </Column>
+                  </Columns>
+                  <Editor />
+                </TableContent>
+              </Controls>
+            </Column>
+          </Columns>
+        </RowContent>
+      </Contents>
+    </Template>
+  </FormTemplates>
+  <Schemas>
+    <Schema Id="0e047829-8b5a-4ead-9d22-e7e729b9a219" Name="System" Prefix="SYS" IsSystem="False">
+      <Tables>
+        <Table Id="6cdcaa97-553d-4f5a-a9f7-737c87fa06f8" Name="Configuration" IsSystem="False" PrimaryKey="fa10d4fc-3cdb-44a0-b681-e1aca54b540b" AuthorizeBy="">
+          <Fields>
+            <Field Id="fa10d4fc-3cdb-44a0-b681-e1aca54b540b" Name="Id" Type="Guid" Size="10" IsSystem="False">
+              <Languages />
+            </Field>
+            <Field Id="75b5d666-d72f-481a-91c2-691ff1c5c9df" Name="Context" Type="VarChar" Size="100" IsSystem="False">
+              <Languages />
+            </Field>
+            <Field Id="bc87c4c5-00e8-4d6a-a7ba-36516a7919ea" Name="Identity" Type="Guid" Size="10" IsSystem="False">
+              <Languages />
+            </Field>
+            <Field Id="47ab37fb-c700-45ed-ab67-689250070bd4" Name="Key" Type="VarChar" Size="255" IsSystem="False">
+              <Languages />
+            </Field>
+            <Field Id="e69effdd-1c30-40d5-ba9c-0d63ec185959" Name="Name" Type="VarChar" Size="255" IsSystem="False">
+              <Languages />
+            </Field>
+            <Field Id="5251ec09-1b51-4de1-8014-7831f67e7182" Name="Type" Type="VarChar" Size="10" IsSystem="False">
+              <Languages />
+            </Field>
+            <Field Id="8a6c38cb-fbb0-4cbc-b724-6202f43266b2" Name="Value" Type="Text" Size="10" IsSystem="False">
+              <Languages />
+            </Field>
+            <Field Id="012709d4-b126-4f4e-9f00-dfaf062f4c47" Name="Parent" Type="Guid" Size="10" IsSystem="False">
+              <Languages />
+            </Field>
+            <Field Id="59722e67-1a68-4ed4-ae16-640caf658af9" Name="Settings" Type="Text" Size="10" IsSystem="False">
+              <Languages />
+            </Field>
+            <Field Id="28b726f0-7f59-46f8-99fe-57a72c84b45a" Name="Order" Type="Int" Size="10" IsSystem="False">
+              <Languages />
+            </Field>
+          </Fields>
+          <Indexes />
+          <Relations>
+            <Relation Id="8978b392-8c88-4105-81e0-42baf67381a2" Name="Parent" TargetSchemaName="" TargetTableName="Configuration" Type="OneToMany" Rule="NoAction" IsSystem="False">
+              <Constraints>
+                <Constraint Id="88ca516f-961b-465a-8d8c-38cc3a40a9a7" Comparison="Equals" SourceFieldName="Parent" Type="Field" TargetFieldName="Id">
+                  <Value><![CDATA[]]></Value>
+                </Constraint>
+              </Constraints>
+            </Relation>
+            <Relation Id="5962d9d9-2957-4d48-8d45-02f1dfb98d0e" Name="Childs" TargetSchemaName="" TargetTableName="Configuration" Type="OneToMany" Rule="NoAction" IsSystem="False">
+              <Constraints>
+                <Constraint Id="ed9dccc5-e272-4d11-a60e-8653b0c40537" Comparison="Equals" SourceFieldName="Id" Type="Field" TargetFieldName="Parent">
+                  <Value><![CDATA[]]></Value>
+                </Constraint>
+              </Constraints>
+            </Relation>
+          </Relations>
+          <InitialData Language="">
+            <Properties />
+            <Columns />
+            <Rows />
+          </InitialData>
+        </Table>
+        <Table Id="4e4211ce-8234-4672-a155-7dd6f52a61b7" Name="Sequence" IsSystem="False" PrimaryKey="0f835209-3ffd-4db1-8a91-ff69c76ec0b6" AuthorizeBy="">
+          <Fields>
+            <Field Id="0f835209-3ffd-4db1-8a91-ff69c76ec0b6" Name="Key" Type="VarChar" Size="255" IsSystem="False">
+              <Languages />
+            </Field>
+            <Field Id="a030abaf-8caf-49a3-bcec-188575b49863" Name="Sequence" Type="Int" Size="0" IsSystem="False">
+              <Languages />
+            </Field>
+          </Fields>
+          <Indexes />
+          <Relations />
+          <InitialData Language="">
+            <Properties />
+            <Columns />
+            <Rows />
+          </InitialData>
+        </Table>
+        <Table Id="f437ea3c-a3bd-4ebd-9823-9fc711226f66" Name="OTP" IsSystem="False" PrimaryKey="56b5bcb6-a8b8-488a-9eae-079564367e2c" AuthorizeBy="">
+          <Fields>
+            <Field Id="56b5bcb6-a8b8-488a-9eae-079564367e2c" Name="Id" Type="Guid" Size="36" IsSystem="False">
+              <Languages />
+            </Field>
+            <Field Id="5793afb7-d91a-4946-b9ac-047409acffac" Name="To" Type="VarChar" Size="255" IsSystem="False">
+              <Languages />
+            </Field>
+            <Field Id="ea6b9c59-21b4-4768-8050-5dad07b8d8ca" Name="Purpose" Type="VarChar" Size="100" IsSystem="False">
+              <Languages />
+            </Field>
+            <Field Id="6d0dbd3a-dd91-4bc5-b4f6-19f93c106ffb" Name="Key" Type="VarChar" Size="100" IsSystem="False">
+              <Languages />
+            </Field>
+            <Field Id="5ef8723c-9adc-4877-ac04-c380d12d0ebd" Name="ExpireDate" Type="DateTimeOffset" Size="0" IsSystem="False">
+              <Languages />
+            </Field>
+            <Field Id="04292ad0-5b1c-492b-8a4b-9ab18fd492bc" Name="TryCount" Type="Int" Size="0" IsSystem="False">
+              <Languages />
+            </Field>
+            <Field Id="17b93ee7-a76e-47e4-9628-dd217b329799" Name="IsValidated" Type="Bit" Size="0" IsSystem="False">
+              <Languages />
+            </Field>
+          </Fields>
+          <Indexes />
+          <Relations />
+          <InitialData Language="">
+            <Properties />
+            <Columns />
+            <Rows />
+          </InitialData>
+        </Table>
+        <Table Id="56ba7448-cc55-43b5-acc9-f5ded246ebcb" Name="WorkflowLock" IsSystem="False" PrimaryKey="7de015c8-8487-4f6d-b58a-ea1de4ca05e1" AuthorizeBy="">
+          <Fields>
+            <Field Id="7de015c8-8487-4f6d-b58a-ea1de4ca05e1" Name="Id" Type="Guid" Size="10" IsSystem="False">
+              <Languages />
+            </Field>
+            <Field Id="5d96e4d4-3bac-462d-b38b-72df7bb611ee" Name="Context" Type="VarChar" Size="10" IsSystem="False">
+              <Languages />
+            </Field>
+            <Field Id="54501953-f0f0-43d1-8304-bc1faaa87a8e" Name="Process" Type="VarChar" Size="255" IsSystem="False">
+              <Languages />
+            </Field>
+            <Field Id="5b40b409-7dd7-4c4b-af0f-f3c813444bcd" Name="Key" Type="VarChar" Size="500" IsSystem="False">
+              <Languages />
+            </Field>
+            <Field Id="6d5e8938-210f-4d43-9cff-306f2e81f586" Name="Date" Type="DateTimeOffset" Size="10" IsSystem="False">
+              <Languages />
+            </Field>
+            <Field Id="d85c4ccd-5e78-4dd3-9ca9-2529624c3427" Name="WorkItemId" Type="Guid" Size="10" IsSystem="False">
+              <Languages />
+            </Field>
+          </Fields>
+          <Indexes />
+          <Relations />
+          <InitialData Language="">
+            <Properties />
+            <Columns />
+            <Rows />
+          </InitialData>
+        </Table>
+      </Tables>
+    </Schema>
+  </Schemas>
+  <WebServices />
+  <ContentTypes />
+  <ScriptModules>
+    <Module IsPublic="False" IsImported="False" Name="AltiKareUtils">
+      <Content><![CDATA[// Do not change this file, without asking 6 Kare developers team.
+var UTILS_VERSION = '0.1.1';
+
+// null to disable, or PS_GLB. Store DB should be created via emakin agent's registorstore command using this process design.
+// e.g: AltiKare.Workflow.Agent.exe registerstore "abc.com.tr" "PS_GLB" "C:\6Kare\Config.xml"
+// abc.com.tr: Emakin app name, Config.xml: This processes XML as file.
+var GLOBAL_STORE_NAME = null;
+//var GLOBAL_STORE_NAME = 'PS_GLB';
+
+var GLOBAL_CONTEXT_NAME = 'GLOBAL';
+
+// Client / Server Side initialization.
+if (typeof window !== 'undefined' && window.document)
+    window.AltiKareUtils = window.AltiKareUtils || {};
+else
+    AltiKareUtils = AltiKareUtils || {};
+
+/******** Text *********/
+(function (Util) {
+
+    // ("Abcı", "  DE/FI", "\n**123**") -> "abci de fi 123"
+    Util.toSearchText = function (_args) {
+        var words = [];
+        Array.from(arguments).forEach(function (e) {
+            if (e) {
+                if (Array.isArray(e)) {
+                    for (var i = 0; i < e.length; i++) {
+                        e[i] && words.push(e[i]);
+                    }
+                } else {
+                    words.push(e);
+                }
+            }
+        });
+
+        return words.join(" ")
+            .replace(/<[^>]*>/g, ' ') // Remove xml tags
+            .replace(/[Ğğ]/g, 'g')
+            .replace(/[Üü]/g, 'u')
+            .replace(/[Şş]/g, 's')
+            .replace(/[Iİı]/g, 'i')
+            .replace(/[Öö]/g, 'o')
+            .replace(/[Çç]/g, 'c')
+            .toLowerCase()
+            .replace(/['’]/g, '')
+            .replace(/[^a-z^0-9\s]/g, ' ')
+            .replace(/\s{2,}/g, ' ') // Remove double spaces
+            .trim();
+    };
+
+    // ("SearchText", "Abcı", "DEFI") -> [{ Name: "SerchText", Value: "%abci%", Comparison: "Like" }, { Name: "SerchText", Value: "%defi%", Comparison: "Like" }]
+    Util.toSearchTextCriteria = function (fieldName, _args) {
+        var words = Array.prototype.slice.call(arguments, 1);
+        return Util.toSearchText(words).split(" ").map(function (e) {
+            return { Name: fieldName, Value: "%" + e + "%", Comparison: "Like" };
+        });
+    };
+
+    // ("SearchText", "Abcı", "DEFI") -> { Criteria: [{ Name: "SerchText", Value: "%abci%", Comparison: "Like" }, { Name: "SerchText", Value: "%defi%", Comparison: "Like" }] }
+    Util.toSearchTextCriteriaBlock = function (fieldName, _args) {
+        var words = Array.prototype.slice.call(arguments, 1);
+        return { Criteria: Util.toSearchTextCriteria(fieldName, words) };
+    };
+
+    // (1, 3) -> "001"
+    // (1, 3, 'X') -> "XX1"
+    Util.padLeft = function (val, len, fill) {
+        return Array(len - String(val).length + 1).join(fill || '0') + val;
+    };
+
+    // (" a   b c ") -> "a b c"
+    Util.clearWhitespace = function (str) {
+        return str && str
+            .replace(/\s{2,}/g, ' ')
+            .trim();
+    };
+
+    // (<b>abc</b>) -> "abc"
+    Util.clearHTML = function (str) {
+        return str && Util.clearWhitespace(str)
+            .replace(/<[^>]*>/g, ' ');
+    };
+
+    // ("abc DEF ghi") -> "Abc DEF Ghi"
+    // ("abc DEF ghi", true) -> "abc DEF ghi" -> "Abc Def Ghi"
+    Util.toTitleCaseTR = function (str, includeAllCaps) {
+        return str && str.split(' ').map(function (word) {
+            var upper = Util.toTRUpperCase(word);
+            if (includeAllCaps || upper != word)
+                return upper.charAt(0) + Util.toTRLowerCase(word.slice(1));
+            return word;
+        }).join(' ')
+            .replace(/\s{2,}/g, ' ')
+            .trim();
+    };
+
+    // ("aBcı") -> "ABCI"
+    Util.toUpperCaseTR = function (str) {
+        return str && str
+            .replace(/[ı]/g, "I")
+            .replace(/[i]/g, "İ")
+            .toUpperCase();
+    };
+
+    // ("AbCI") -> "abcı"
+    Util.toLowerCaseTR = function (str) {
+        return str && str
+            .replace(/[I]/g, "ı")
+            .replace(/[İ]/g, "i")
+            .toLowerCase();
+    };
+
+    var _mailRegex;
+    Util.isValidEmail = function (str) {
+        _mailRegex = _mailRegex || new RegExp(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+        return !str || _mailRegex.test(str        );
+    };
+
+    Util.toObject = function (str) {
+        if (str === null || str === undefined || typeof str !== 'string' || !str)
+            return str;
+
+        return JSON.parse(str);
+    };
+
+    Util.toJSON = function (strOrObj, indent) {
+        var strOrObj = Util.toObject(strOrObj);
+        return JSON.stringify(strOrObj, null, indent);
+    };
+
+})(AltiKareUtils.Text = AltiKareUtils.Text || {});
+
+/******** Xml *********/
+(function (Util) {
+
+    Util.parse = function (strOrXml) {
+        var result = null;
+        if (typeof (strOrXml) === 'string' && strOrXml) {
+            if (typeof window !== 'undefined' && window.document) {
+                // Client side?
+                result = (new AltiKare.Forms.Scripting.XmlProxy()).Parse(strOrXml);
+            } else {
+                // Server side?
+                result = Xml.parse(strOrXml);
+            }
+        } else if (strOrXml && strOrXml.SelectAll) {
+            result = strOrXml;
+        }
+        return result;
+    };
+
+    // (<b>abc</b>) -> "&lt;b&gt;abc<&lt;/&gt;"
+    Util.escape = function (str) {
+        return str && str.replace(/[<>&'"]/g, function (c) {
+            switch (c) {
+                case '<': return '&lt;';
+                case '>': return '&gt;';
+                case '&': return '&amp;';
+                case "'": return '&apos;';
+                case '"': return '&quot;';
+            }
+        });
+    };
+
+    // (<b>abc</b>) -> "&lt;b&gt;abc<&lt;/&gt;"
+    Util.unescape = function (str) {
+        return str && str.replace(/[(&amp;|&quot;|&#39;|'&lt;|&gt;)]/g, function (c) {
+            switch (c) {
+                case '&lt;': return '<';
+                case '&gt;': return '>';
+                case '&amp;': return '&';
+                case '&apos;': return "'";
+                case '&quot;': return '"';
+            }
+        });
+    };
+
+
+    Util.setValueAndCaption = function (xml, path, value, caption) {
+        xml && xml.SelectAll(path || '.', function () {
+            this.SetValue(value);
+            if (caption != undefined && caption != null)
+                this.SetAttribute("Caption", caption);
+        });
+    };
+
+    /* Xml.copy yetmediği durumlar var, ondan emin ol öyle giriş. Şimdilik editör için yeterli 
+
+    Util.setXml = function (target, xml, path) {
+        Script.Assert(xml, "xml parameter is empty!")
+
+        target = Util.parse(target);
+        xml = Util.parse(xml);
+
+        if (target) {
+            if (path)
+                xml = xml.SelectSingle(path);
+
+            setXmlImpl(target, xml);
+        }
+
+        return target;
+    };
+
+
+    function setXmlImpl(target, source) {
+        // Copy attributes
+        var sourceAttribs = {};
+        source.SelectAll("@*", function () {
+            sourceAttribs[this.Evaluate("name()")] = this;
+        });
+
+        target.SelectAll("@*", function () {
+
+            var name = this.Evaluate("name()");
+            var srcAttr = sourceAttribs[name];
+
+            if (!srcAttr) {
+
+                target.RemoveAttribute(name);
+
+            } else {
+
+                var val = this.Evaluate();
+                var srcVal = srcAttr.Evaluate();
+                if (val !== srcVal)
+                    target.SetAttribute(name, srcVal);
+                sourceAttribs[name] = null;
+
+            }
+        });
+
+        Object.vals(sourceAttribs).forEach(function (attrToAdd) {
+            if (attrToAdd)
+                target.SetAttribute(attrToAdd.Evaluate("name()"), attrToAdd.Evaluate());
+        });
+
+        // Copy elements
+        var sourceElements = {};
+        source.SelectAll("*", function () {
+            var name = this.Evaluate("name()");
+            if (sourceElements[name]) {
+                if (Array.isArray(sourceElements[name]))
+                    sourceElements[name].push(this);
+                else
+                    sourceElements[name] = [sourceElements[name], this];
+            } else {
+                sourceElements[name] = this;
+            }
+        });
+
+        var lastName, elementIndex = 0;
+        target.SelectAll("*", function () {
+
+            var name = this.Evaluate("name()");
+            var srcElement = sourceElements[name];
+
+            if (!srcElement) {
+
+                this.Remove();
+
+            } else {
+
+                elementIndex = (name === lastName) ? elementIndex + 1 : 0;
+                if (!Array.isArray(srcElement)) {
+
+
+                }
+
+
+                var isComplex = this.Count("*") > 0;
+                var isSrcComplex = srcElement.Count("*") > 0;
+
+                if (isComplex && isSrcComplex) {
+
+                    setXmlImpl(this, srcElement);
+
+                } else if (isComplex && !isSrcComplex) {
+
+                    this.SetValue(srcElement.Evaluate());
+                    sourceElements[name] = null;
+
+                } else if (!isComplex && isSrcComplex) {
+
+                    this.InnerXml(srcElement.InnerXml());
+
+                } else {
+
+                }
+            }
+
+
+        });
+
+        Object.vals(sourceAttribs).forEach(function (attrToAdd) {
+            if (attrToAdd) {
+                var name = attrToAdd.Evaluate("name()");
+                target.SetAttribute(name, attrToAdd.Evaluate());
+            }
+        });
+        var nodesSet = {};
+        target.SelectAll("*[not(*)]", function () {
+            var src = xml.SelectSingle(this.Evaluate("name()"));
+            setXmlImpl(this, xml);
+        });
+    }
+    */
+
+    Util.JSON_TYPE = {
+        String: 'String',
+        Boolean: 'Boolean',
+        Date: 'Date',
+        Numeric: 'Numeric',
+        Object: 'Object',
+        Array: 'Array',
+    };
+
+    Util.ELEMENT_SERIALZATION_TYPE = {
+        AllWithNoChild: 'AllWithNoChild',
+        All: 'All',
+        None: 'None',
+    };
+
+    Util.ATTRIB_SERIALZATION_TYPE = {
+        Common: 'Common', // Caption + State attributes
+        All: 'All',
+        None: 'None',
+    };
+
+    Util.ELEMENT_DESERIALZATION_TYPE = {
+        ExistingNodesWithAllAttributes: 'ExistingNodesWithAllAttributes',
+        None: 'None',
+    };
+
+    // opts = {
+    //   includeEmptyFields: false,
+    //   fields: [{ name: 'Field1', xPath: 'Field1', type: AltiKareUtils.Xml.JSON_TYPE.String, includeEmpty: false }, ..],
+    //   arrays: [..],
+    //   attribs: [..]
+    //   handleObj: function(obj, node, opts)
+    // }
+    Util.toObject = function (xml, opts, parentOpts) {
+
+        opts = mergeSerializationOpts(opts, parentOpts);
+        if (!opts)
+            return;
+
+        xml = Util.parse(xml);
+        if (!xml)
+            return;
+
+        var result = {};
+
+        if (opts.fields === Util.ELEMENT_SERIALZATION_TYPE.AllWithNoChild || opts.fields === Util.ELEMENT_SERIALZATION_TYPE.All) {
+
+            xml.SelectAll("*[not(*)]", function () {
+                if (!isArrayInJsonSerializationOptions(opts, this))
+                    setObjectField(result, this, { xPath: ".", name: this.Evaluate("name()") }, opts);
+            });
+
+        }
+
+        if (opts.fields === Util.ELEMENT_SERIALZATION_TYPE.All) {
+
+            xml.SelectAll("*[*]", function () {
+                if (!isArrayInJsonSerializationOptions(opts, this))
+                    setObjectField(result, this, { xPath: ".", name: this.Evaluate("name()"), type: Util.JSON_TYPE.Object }, opts);
+            });
+
+
+        } else if (Array.isArray(opts.fields)) {
+
+            opts.fields.forEach(function (field) {
+                setObjectField(result, xml, field, opts);
+            });
+
+        }
+
+        if (opts.arrays) {
+
+            opts.arrays.forEach(function (arr) {
+                if (!arr.xPath)
+                    arr.xPath = arr.name;
+                if (!arr.rowXPath)
+                    arr.rowXPath = "*";
+                result[arr.name] = Util.toArray(xml, arr, opts);
+            });
+
+        }
+
+        setObjectAttributes(result, xml, opts);
+
+        opts.handleObject && opts.handleObj(result, xml, opts);
+
+        return result;
+    };
+
+    Util.toJSON = function (xml, opts) {
+        return JSON.stringify(Util.toObject(xml, opts));
+    };
+
+    // opts (:toObject.opts) = {
+    //   xPath: '.', rowXPath: '*', includeEmptyFields: false
+    //   handleRow: function(row, node, opts),
+    //   handleArr: function(arr, rootNode, opts),
+    // }
+    Util.toArray = function (xml, opts, parentOpts) {
+
+        opts = mergeSerializationOpts(opts, parentOpts);
+        if (!opts)
+            return;
+
+        xml = Util.parse(xml);
+        if (!xml)
+            return;
+
+        var result = null;
+
+        // Fix xPath & rowXPath
+        var rootNode = xml;
+        if (opts.xPath) {
+            if (opts.rowXPath) {
+                rootNode = xml.SelectSingle(opts.xPath);
+            } else {
+                opts.rowXPath = opts.xPath;
+                opts.xPath = "";
+            }
+        } else {
+            if (!opts.rowXPath)
+                opts.rowXPath = "*";
+        }
+
+        if (rootNode) {
+            result = [];
+            rootNode.SelectAll(opts.rowXPath, function () {
+                var row = Util.toObject(this, opts);
+                if (row !== undefined)
+                    result.push(row);
+                opts.handleRow && opts.handleRow(row, this, opts);
+            });
+
+        }
+        opts.handleArr && opts.handleArr(result, rootNode, opts);
+
+        return result;
+    };
+
+    function mergeSerializationOpts(opts, parentOpts) {
+        if (opts && typeof opts === 'string')
+            opts = { name: opts };
+        else
+            opts = opts || {};
+
+        if (opts.fields === Util.ELEMENT_SERIALZATION_TYPE.None)
+            return null;
+
+        if (parentOpts) {
+            if (!opts.fields && !Array.isArray(parentOpts.fields))
+                opts.fields = parentOpts.fields;
+
+            if (!opts.attribs && !Array.isArray(parentOpts.attribs))
+                opts.attribs = parentOpts.attribs;
+
+            if (!opts.includeEmptyFields && opts.includeEmptyFields !== false && parentOpts.includeEmptyFields)
+                opts.includeEmptyFields = true;
+        }
+
+        opts.fields = opts.fields || Util.ELEMENT_SERIALZATION_TYPE.AllWithNoChild;
+        opts.attribs = opts.attribs || Util.ATTRIB_SERIALZATION_TYPE.Common;
+
+        return opts;
+    }
+
+    // opts = {
+    //   name: 'Field1', xPath: 'Field1', type: JSON_TYPE.String, includeEmpty: false,
+    //   attribs: [{ name: 'field@a', xPath: '@a', type: JSON_TYPE.String, includeEmpty: false }]
+    // }
+    function setObjectField(obj, xml, opts, parentOpts) {
+        xml = xml && (opts.xPath === '.' ? xml : xml.SelectSingle(opts.xPath || opts.name));
+        if (!xml)
+            return;
+
+        var isEmpty = xml.IsEmpty();
+        if (!isEmpty || opts.includeEmpty || (parentOpts && parentOpts.includeEmptyFields)) {
+
+            if ((opts.type || Util.JSON_TYPE.String) === Util.JSON_TYPE.String)
+                obj[opts.name] = isEmpty ? "" : xml.Evaluate();
+            else if (opts.type === Util.JSON_TYPE.Numeric)
+                obj[opts.name] = isEmpty ? null : xml.EvaluateNumber();
+            else if (opts.type === Util.JSON_TYPE.Boolean)
+                obj[opts.name] = isEmpty ? null : xml.EvaluateBoolean();
+            else if (opts.type === Util.JSON_TYPE.Date)
+                obj[opts.name] = isEmpty ? null : xml.EvaluateDateTime();
+            else if (opts.type === Util.JSON_TYPE.Object)
+                obj[opts.name] = isEmpty ? {} : Util.toObject(xml, opts, parentOpts);
+            else if (opts.type === Util.JSON_TYPE.Array)
+                obj[opts.name] = isEmpty ? [] : Util.toArray(xml, opts, parentOpts);
+        }
+
+        setObjectAttributes(obj, xml, opts);
+    }
+
+    function setObjectAttributes(obj, xml, opts) {
+        if (opts.attribs === Util.ATTRIB_SERIALZATION_TYPE.None)
+            return;
+
+        if ((opts.attribs || Util.ATTRIB_SERIALZATION_TYPE.Common) === Util.ATTRIB_SERIALZATION_TYPE.Common) {
+
+            setObjectField(obj, xml, { name: (opts.name || "") + "@Caption", xPath: "@Caption" });
+            setObjectField(obj, xml, { name: (opts.name || "") + "@State", xPath: "@State" });
+
+        } else if (opts.attribs === Util.ATTRIB_SERIALZATION_TYPE.All) {
+
+            xml.SelectAll("@*", function () {
+                var attribName = this.Evaluate("name()");
+                setObjectField(obj, this, { name: (opts.name || "") + "@" + attribName, xPath: "@" + attribName });
+            });
+
+        } else if (Array.isArray(opts.attribs)) {
+
+            opts.attribs.forEach(function (attrib) {
+                setObjectField(obj, xml, attrib);
+            });
+
+        }
+    }
+
+    function isArrayInJsonSerializationOptions(opts, node) {
+        var result = false;
+        if (opts.arrays) {
+            var nodeName = node.navigator.node.localName;
+            result = opts.arrays.some(function (e) { e.name === nodeName; })
+        }
+        return result;
+    }
+    /*
+        Util.importFromObj = function (obj, xml, opts, parentOpts) {
+            opts = mergeDeserializationOpts(opts, parentOpts);
+            if (!opts)
+                return;
+    
+            xml = Util.parse(xml);
+            if (!xml)
+                return;
+    
+            if(opts.Fields = Util.ELEMENT_DESERIALZATION_TYPE.ExistingNodesWithAllAttributes) {
+                
+                xml.SelectAll("*", function() {
+                    
+                });
+    
+            }
+    
+            return xml;
+        };
+    
+        function mergeDeserializationOpts(opts, parentOpts) {
+            opts = opts || {};
+    
+            if (opts.fields === Util.ELEMENT_DESERIALZATION_TYPE.None)
+                return null;
+    
+            if (parentOpts) {
+                if (!opts.fields && !Array.isArray(parentOpts.fields))
+                    opts.fields = parentOpts.fields;
+            }
+    
+            opts.fields = opts.fields || Util.ELEMENT_DESERIALZATION_TYPE.ExistingNodesWithAllAttributes;
+    
+            return opts;
+        }
+    
+        function setFromObjectField(obj, xml, opts, parentOpts) {
+            xml = xml && (opts.xPath === '.' ? xml : xml.SelectSingle(opts.xPath || opts.name));
+            if (!xml)
+                return;
+    
+            var isEmpty = xml.IsEmpty();
+            if (!isEmpty || opts.includeEmpty || (parentOpts && parentOpts.includeEmptyFields)) {
+    
+                if ((opts.type || Util.JSON_TYPE.String) === Util.JSON_TYPE.String)
+                    obj[opts.name] = isEmpty ? "" : xml.Evaluate();
+                else if (opts.type === Util.JSON_TYPE.Numeric)
+                    obj[opts.name] = isEmpty ? null : xml.EvaluateNumber();
+                else if (opts.type === Util.JSON_TYPE.Boolean)
+                    obj[opts.name] = isEmpty ? null : xml.EvaluateBoolean();
+                else if (opts.type === Util.JSON_TYPE.Date)
+                    obj[opts.name] = isEmpty ? null : xml.EvaluateDateTime();
+                else if (opts.type === Util.JSON_TYPE.Object)
+                    obj[opts.name] = isEmpty ? {} : Util.toObject(xml, opts, parentOpts);
+                else if (opts.type === Util.JSON_TYPE.Array)
+                    obj[opts.name] = isEmpty ? [] : Util.toArray(xml, opts, parentOpts);
+            }
+    
+            setObjectAttributes(obj, xml, opts);
+        }
+    */
+})(AltiKareUtils.Xml = AltiKareUtils.Xml || {});
+
+/******** Server Side Modules *********/
+if (typeof window === 'undefined') {
+
+    /******** Config *********/
+    (function (Util) {
+
+        var _hasGlobalDB;
+        Util.hasGlobalDB = function (reset) {
+
+            if (!GLOBAL_STORE_NAME)
+                return false;
+
+            var result = _hasGlobalDB !== undefined ? _hasGlobalDB : $Cache.Get("AKUtils:HasGlobalDB");
+            if (result === null || reset) {
+                try {
+                    // TODO: This does not work atm. If there is no store, script execution stops and emakin throws an error instead. 
+                    // For now, we can disable global data store from constant (GLOBAL_STORE_NAME)
+                    $Database.Empty({
+                        Parameters: {
+                            TargetDataStore: GLOBAL_STORE_NAME,
+                            TargetSchema: 'System',
+                            TargetTable: 'Configuration'
+                        },
+                    });
+                    result = true;
+                } catch (err) {
+                    result = false;
+                }
+                _hasGlobalDB = result;
+                $Cache.Set("AKUtils:HasGlobalDB", result);
+            }
+            return result;
+        };
+
+        Util.resolveContext = function (context) {
+            if (!context) {
+                if (typeof Config !== 'undefined' && Config && Config.CONTEXT) // Defined in Config Module
+                    context = Config.CONTEXT;
+                else if (typeof $CONTEXT !== undefined && $CONTEXT) // Defined as CONTEXT variable in pool
+                    context = $CONTEXT;
+            }
+            return context;
+        }
+
+        Util.getIdentityConfig = function (userId, context, key, inheritDomainConfig) {
+            Script.Assert(userId, "userId parameter is empty!")
+            if (inheritDomainConfig === undefined && (key === true || key === false)) {
+                inheritDomainConfig = key;
+                key = null;
+            }
+
+            var result = getConfig(context, userId, key, false, false).v;
+            if (result === undefined && inheritDomainConfig)
+                result = Util.getConfig(context, key)
+            return result;
+        };
+
+        Util.getConfig = function (context, key, ignoreIfNotFound) {
+            if (ignoreIfNotFound === undefined && (key === true || key === false)) {
+                ignoreIfNotFound = key;
+                key = null;
+            }
+
+            var hasGlobalDB = Util.hasGlobalDB();
+
+            var result = getConfig(context, null, key, false, hasGlobalDB ? true : ignoreIfNotFound);
+            if (result.v === undefined && hasGlobalDB)
+                result = getConfig(context, null, key, true, ignoreIfNotFound);
+
+            return result.v;
+        };
+
+        Util.getDomainConfig = function (context, key, ignoreIfNotFound) {
+            if (ignoreIfNotFound === undefined && (key === true || key === false)) {
+                ignoreIfNotFound = key;
+                key = null;
+            }
+            return getConfig(context, null, key, false, !ignoreIfNotFound).v;
+        };
+
+        Util.getGlobalConfig = function (context, key, ignoreIfNotFound) {
+            if (ignoreIfNotFound === undefined && (key === true || key === false)) {
+                ignoreIfNotFound = key;
+                key = null;
+            }
+            return getConfig(context, null, key, true, !ignoreIfNotFound).v;
+        };
+
+        function getCacheKey(context, key, isGlobal) {
+            return "AKUtils:Config:" + (isGlobal ? "Global:" : "") + context + ":" + key;
+        }
+
+        Util.invalidateCache = function (context) {
+            Script.Assert(context, "context parameter is empty!")
+
+            invalidateContextCacheImpl(context, false);
+            if (Util.hasGlobalDB())
+                invalidateContextCacheImpl(context, true);
+        }
+
+        function invalidateContextCacheImpl(context, isGlobal) {
+            var keys = {};
+            $Database.Get(getConfigQuery(context, null, null, isGlobal, ['Id', 'Parent', 'Key'])).Each(function () {
+                keys[this.Id] = { parent: this.Parent, key: this.Key };
+            });
+
+            Object.keys(keys).forEach(function (e) {
+                var config = keys[e];
+                var key = config.key;
+                var depth = 0;
+                var parent = config.parent && keys[config.parent];
+                while (parent && depth < 100) {
+                    depth++;
+                    if (parent.key)
+                        key = parent.key + "\\" + key;
+                    parent = parent.parent && keys[parent.parent];
+                }
+
+                $Cache.Set(getCacheKey(context, key, isGlobal), null, "00:00:01");
+            });
+        }
+
+        function getConfig(context, user, key, isGlobal, throwIfNotFound) {
+
+            if (!key) {
+                key = context;
+                context = Util.resolveContext() || GLOBAL_CONTEXT_NAME;
+            }
+            Script.Assert(context, "context parameter is empty!")
+
+            if (Array.isArray(key))
+                key = key.join("\\");
+            Script.Assert(key, "key parameter is empty!")
+
+            var cacheKey = getCacheKey(context, key, isGlobal);
+
+            var result = null;
+            if (!user)
+                result = $Cache.Get(cacheKey);
+
+            if (!result) {
+
+                $Database.Get(getConfigQuery(context, user, key, isGlobal, ['Value', 'Type'])).Each(function () {
+                    result = {
+                        v: Util.parseConfigValue(this.Value, this.Type),
+                    };
+                });
+
+                result = result || {};
+                if (!user)
+                    $Cache.Set(cacheKey, result);
+            }
+
+            if (result.v === undefined && throwIfNotFound)
+                throw ((isGlobal ? "Global " : "") + (user ? "User (" + user + ")" : "System") + " configuration '[" + context + "] " + key + "' not set!");
+
+            return result;
+        }
+
+        function getConfigQuery(context, user, key, isGlobal, columns) {
+            var result = {
+                Parameters: {
+                    TargetSchema: 'System',
+                    TargetTable: 'Configuration'
+                },
+                Columns: [],
+                Where: {
+                    Criteria: [
+                        { name: 'Context', value: context },
+                        { name: 'Identity', value: user || null },
+                    ]
+                }
+            }
+
+            columns && columns.forEach(function (e) {
+                result.Columns.push({ Name: e });
+            });
+
+            if (isGlobal)
+                result.Parameters.TargetDataStore = GLOBAL_STORE_NAME;
+
+            if (key) {
+                var keys = key.split('\\');
+                var parentPrefix = keys.map(function () {
+                    return "Parent.";
+                })
+                keys.forEach(function (e) {
+                    parentPrefix.pop();
+                    result.Where.Criteria.push({ name: parentPrefix.join("") + 'Key', value: e });
+                });
+            }
+
+            return result;
+        }
+
+        Util.parseConfigValue = function (value, type) {
+            var result = null;
+
+            if (value !== null) {
+                if (value === '') {
+                    switch (type) {
+                        case 'TEXT':
+                            value = '""';
+                            break;
+                        case 'NUMBER':
+                            value = null;
+                            break;
+                        case 'BOOL':
+                            value = null;
+                            break;
+                        case 'LIST':
+                            value = "[]";
+                            break;
+                    }
+                }
+
+                result = JSON.parse(value);
+                if (result) {
+                    if (type === 'LIST') {
+                        result = result.map(function (e) {
+                            return e && e.Id ? e.Id : e;
+                        })
+                    } else {
+                        if (result.Id)
+                            result = result.Id;
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        Util.setDomainConfig = function (context, key, value) {
+            return setConfig(context, null, key, value, false);
+        };
+
+        Util.setIdentityConfig = function (userId, context, key, value) {
+            return setConfig(context, userId, key, value, false);
+        };
+
+        Util.setGlobalConfig = function (context, key, value) {
+            return setConfig(context, null, key, value, true);
+        };
+
+        function setConfig(context, user, key, value, isGlobal) {
+
+            if (!key) {
+                key = context;
+                context = Util.resolveContext();
+            }
+
+            Script.Assert(context, "context parameter is empty!");
+            if (Array.isArray(key))
+                key = key.join("\\");
+            Script.Assert(key, "key parameter is empty!")
+
+            var table = $Database.Get(getConfigQuery(context, user, key, isGlobal, ['Id', 'Value', 'Context', 'Identity', 'Key'])).Each(function () {
+                this.Value = JSON.stringify(value);
+            });
+
+            if (table.RowCount() === 0) {
+                table.Add({
+                    Context: context,
+                    User: user || null,
+                    Key: key,
+                    Value: value,
+                });
+            }
+
+            table.Save();
+
+            if (!user)
+                $Cache.Set(getCacheKey(context, key, isGlobal), null, '00:00:01');
+        }
+
+    })(AltiKareUtils.Config = AltiKareUtils.Config || {});
+
+    /******** Sequence *********/
+    (function (Util) {
+
+        Util.getSequence = function (context, _keys) {
+            var key = Array.from(arguments).join(":");
+            return getSequence(context, false, key);
+        }
+
+        Util.getGlobalSequence = function (context, _keys) {
+            var key = Array.from(arguments).join(":");
+            return getSequence(context, true, key);
+        }
+
+        function getSequence(context, isGlobal, key) {
+
+            if (!key) {
+                key = context;
+                context = AltiKareUtils.Config.resolveContext() || GLOBAL_CONTEXT_NAME;
+            }
+            Script.Assert(key, "key parameter is empty!")
+
+            var tableParams = {
+                TargetSchema: 'System',
+                TargetTable: 'Sequence'
+            };
+            if (isGlobal)
+                tableParams.TargetDataStore = GLOBAL_STORE_NAME;
+
+            $Cache.Lock("AKUtils:Sequence:" + key);
+
+            var table = $Database.Get({
+                Parameters: tableParams,
+                Columns: [
+                    { Name: 'Key' },
+                    { Name: 'Sequence' },
+                ],
+                Where: {
+                    Criteria: [{ name: 'Key', value: context + ":" + key }]
+                },
+            });
+
+            table.Each(function () {
+                this.Sequence += 1;
+                result = this.Sequence;
+            });
+
+            if (!result) {
+                result = 1;
+                table.Add({
+                    Key: key,
+                    Sequence: result,
+                });
+            }
+
+            table.Save();
+            return result;
+        }
+
+
+    })(AltiKareUtils.Sequence = AltiKareUtils.Sequence || {});
+
+}
+]]></Content>
+    </Module>
+    <Module IsPublic="False" IsImported="False" Name="Tests">
+      <Content><![CDATA[function runTests() {
+
+    // AltiKareUtils.Text
+    assertEquals(AltiKareUtils.Text.toSearchText("Abcı", "  DE/FI", "\n**123**"),
+        "abci de fi 123"
+        , "AltiKareUtils.Text.toSearchText"
+    );
+
+    assertEquals(AltiKareUtils.Text.toSearchTextCriteria("SearchText", "Abcı", "DEFI"),
+        [{ Name: "SearchText", Value: "%abci%", Comparison: "Like" }, { Name: "SearchText", Value: "%defi%", Comparison: "Like" }]
+        , "AltiKareUtils.Text.toSearchTextCriteria"
+    );
+
+    assertEquals(AltiKareUtils.Text.toSearchTextCriteriaBlock("SearchText", "Abcı", "DEFI"),
+        { Criteria: [{ Name: "SearchText", Value: "%abci%", Comparison: "Like" }, { Name: "SearchText", Value: "%defi%", Comparison: "Like" }] }
+        , "AltiKareUtils.Text.toSearchTextCriteriaBlock"
+    );
+
+    assertEquals(AltiKareUtils.Text.padLeft(1, 3),
+        "001"
+        , "AltiKareUtils.Text.padLeft"
+    );
+
+    assertEquals(AltiKareUtils.Text.padLeft(1000, 3),
+        "1000"
+        , "AltiKareUtils.Text.padLeft"
+    );
+
+    assertEquals(AltiKareUtils.Text.padLeft(1, 3, 'X'),
+        "XX1"
+        , "AltiKareUtils.Text.padLeft"
+    );
+}
+exports.runTests = runTests;
+
+function assertEquals(val1, val2, funcName) {
+    val1 = JSON.stringify(val1);
+    val2 = JSON.stringify(val2);
+    Script.AssertEquals(val1, val2, funcName + " test failed! Expected value was: \"" + val2 + "\", but returned \"" + val1 + "\".");
+}]]></Content>
+    </Module>
+    <Module IsPublic="False" IsImported="False" Name="Functions">
+      <Content><![CDATA[Functions.loadConfig = function (path, identity, isGlobal) {
+
+    var tableParams = getConfigTableParams(isGlobal);
+    if (!tableParams)
+        return;
+
+    var parents = {};
+
+    $Database.ExportToXml({
+        Parameters: tableParams,
+        Where: {
+            Criteria: [
+                { name: 'Context', value: AltiKareUtils.Config.resolveContext() },
+                { name: 'Identity', value: identity || null },
+            ]
+        },
+        Columns: [
+            { Name: "Id" },
+            { Name: "Parent" },
+            { Name: "Context" },
+            { Name: "Identity" },
+            { Name: "Key" },
+            { Name: "Name" },
+            { Name: "Type" },
+            { Name: "Value" },
+            { Name: "Settings" },
+            { Name: "Order" },
+        ],
+        XPath: path,
+        Order: [
+            { Name: "Order" },
+            { Name: "Name" }
+        ],
+        Map: function (xml) {
+
+            if (!this.Name)
+                xml.SetValue("Name", this.Key);
+
+            var settings = this.Settings ? JSON.parse(this.Settings) : null;
+            if (settings) {
+
+                xml.SelectSingle("Type").SetAttribute("Caption", settings["Type@Caption"] || "");
+
+                xml.SetValue("Description", settings.Description || "");
+
+                var permissions = settings.Permissions;
+                if (permissions) {
+                    xml.SetValue("Permissions/LockSetup", permissions.LockSetup != undefined ? permissions.LockSetup : "");
+                    xml.SetValue("Permissions/LockValue", permissions.LockValue != undefined ? permissions.LockValue : "");
+                }
+            }
+
+            setupXmlWithValue(xml, this.Value, this.Type, settings && settings.Setup);
+
+            // Remove childs from xml and add it to parents
+            if (this.Parent) {
+                if (!parents[this.Parent])
+                    parents[this.Parent] = [];
+                parents[this.Parent].push(xml);
+            }
+        }
+    });
+
+
+    // Put childs to parent xml nodes
+    Object.keys(parents).forEach(function (parent) {
+        var childs = parents[parent];
+        selectAllEntries(path, "Id='" + parent + "'", function (xml) {
+            xml = xml.SelectSingle("Childs");
+            childs.forEach(function (child) {
+                xml.InnerXml(xml.InnerXml() + child.OuterXml());
+            });
+        });
+
+        childs.forEach(function (child) {
+            child.Remove();
+        });
+    })
+}
+
+function setupXmlWithValue(xml, value, type, editor, asRawValue) {
+
+    xml.SetValue("Value", "");
+
+    if (value !== null && typeof value !== 'object' && !asRawValue)
+        value = JSON.parse(value);
+
+    type = type || 'TEXT';
+    editor = editor || {};
+    editor.Type = editor.Type || 'STRING';
+
+    if (value !== null) {
+        switch (type) {
+            case 'TEXT':
+                if (editor.Type === 'HTML')
+                    xml.SetValue("ValueAs/HTML", value);
+                else if (editor.Type === 'TEXT')
+                    xml.SetValue("ValueAs/Text", value);
+                else
+                    xml.SetValue("Value", value);
+                break;
+            case 'NUMBER':
+                xml.SetValue("ValueAs/Number", value);
+                break;
+            case 'BOOL':
+                xml.SetValue("ValueAs/Bool", value);
+                break;
+            case 'FILE':
+                if (typeof value === 'object') {
+                    if (value.Id)
+                        xml.SetValue("ValueAs/File", value.Id);
+                    if (value.Caption)
+                        xml.SelectSingle("ValueAs/File").SetAttribute(value.Caption);
+                } else {
+                    xml.SetValue("ValueAs/File", value);
+                    xml.SelectSingle("ValueAs/File").SetAttribute("File");
+                }
+                break;
+            case 'IDENTITY':
+                if (typeof value === 'object') {
+                    if (value.Id)
+                        xml.SetValue("ValueAs/Identity", value.Id);
+                    if (value.Caption)
+                        xml.SelectSingle("ValueAs/Identity").SetAttribute("Caption", value.Caption);
+                } else {
+                    xml.SetValue("ValueAs/Identity", value);
+                }
+                break;
+            case 'OBJECT':
+                xml.SetValue("ValueAs/Object", AltiKareUtils.Text.toJSON(value, 2));
+                break;
+            case 'LIST':
+            case 'GROUP':
+                break;
+            default:
+                xml.SetValue("Value", value);
+                break;
+        }
+
+        xml.SelectSingle("Setup/ListItemType", function () {
+            this.SetValue(editor.ListItemType);
+            this.SetAttribute("Caption", editor["ListItemType@Caption"]);
+        });
+        xml.SelectSingle("Setup/Type", function () {
+            this.SetValue(editor.Type);
+            this.SetAttribute("Caption", editor["Type@Caption"]);
+        });
+
+        if (editor.BoolOptions) {
+            xml.SetValue("Setup/BoolOptions/TrueCaption", editor.BoolOptions.TrueCaption || "");
+            xml.SetValue("Setup/BoolOptions/FalseCaption", editor.BoolOptions.FalseCaption || "");
+        }
+        if (editor.OptionOptions) {
+            editor.OptionOptions.forEach(function (e) {
+                var entry = xml.AppendChild("Setup/OptionOptions/Entry");
+                entry.SetValue("Value", e.Value || "");
+                entry.SetValue("Caption", e.Caption || "");
+            });
+        }
+    }
+
+    if (type === 'LIST' && value && Array.isArray(value)) {
+        xml.SetValue("Value", "");
+        value.forEach(function (e) {
+            var child = xml.AppendChild("Childs/Entry");
+            setupXmlWithValue(child, e, editor && editor.ListItemType, {
+                type: editor && editor.Type
+            }, true);
+        });
+    }
+}
+
+Functions.saveConfig = function (path, identity, isGlobal) {
+
+    var tableParams = getConfigTableParams(isGlobal);
+    if (!tableParams)
+        return;
+
+    var context = AltiKareUtils.Config.resolveContext();
+
+    AltiKareUtils.Config.invalidateCache(context);
+
+    identity = identity || null;
+
+    // Set empty id's for child->parent relations 
+    selectAllEntries(path, "Id=''", function (xml) {
+        xml.SetValue("Id", Script.NewId());
+    });
+
+    // Delete child entries if parent is deleted
+    selectAllEntries(path, "@State='Deleted'", function (xml) {
+        xml.SelectAll(".//Childs/Entry", function () {
+            this.SetAttribute("State", "Deleted");
+        });
+    });
+
+    path = path + "|" + path + "//Childs/Entry[../../Type='GROUP']"
+
+    // Save
+    var order = 0;
+    $Database.ImportFromXml({
+        Parameters: tableParams,
+        XPath: path,
+        Columns: [
+            { Name: "Id" },
+            { Name: "Parent" },
+            { Name: "Context" },
+            { Name: "Identity" },
+            { Name: "Key" },
+            { Name: "Name" },
+            { Name: "Type" },
+            { Name: "Value" },
+            { Name: "Settings" },
+            { Name: "Order" },
+        ],
+        Map: function (xml) {
+            this.Parent = xml.Evaluate("../../Id") || null;
+            this.Context = context;
+            this.Identity = identity;
+
+            if (this.Parent) {
+                order++;
+                this.Order = order;
+            } else {
+                order = 0;
+            }
+
+            this.Value = getConfigValueFromXml(xml);
+
+            this.Settings = AltiKareUtils.Xml.toJSON(xml, {
+                fields: [
+                    { name: 'Type' },
+                    { name: 'Description' },
+                    {
+                        name: "Setup", type: "Object",
+                        fields: [
+                            { name: 'Type' },
+                            { name: 'ListItemType' },
+                            { name: 'BoolOptions', type: "Object" },
+                        ],
+                        arrays: [
+                            { name: "OptionOptions" }
+                        ]
+                    }, {
+                        name: "Permissions", type: "Object",
+                        fields: [
+                            { name: 'LockSetup', type: "Boolean" },
+                            { name: 'LockValue', type: "Boolean" },
+                        ],
+                    }
+                ]
+            });
+        },
+    });
+
+    AltiKareUtils.Config.invalidateCache(context);
+}
+
+function getConfigValueFromXml(xml, asRawValue) {
+
+    var type = xml.Evaluate("Type") || 'TEXT';
+    var editorType = xml.Evaluate("Setup/Type");
+
+    var value;
+    switch (type) {
+        case 'TEXT':
+            if (editorType === 'HTML')
+                value = xml.Evaluate("ValueAs/HTML");
+            else if (editorType === 'TEXT')
+                value = xml.Evaluate("ValueAs/Text");
+            else
+                value = xml.Evaluate("Value");
+            break;
+        case 'NUMBER':
+            value = !xml.IsEmpty("ValueAs/Number") ? xml.EvaluateNumber("ValueAs/Number") : undefined;
+            break;
+        case 'BOOL':
+            value = !xml.IsEmpty("ValueAs/Bool") ? xml.EvaluateBoolean("ValueAs/Bool") : undefined;
+            break;
+        case "DATE":
+            value = !xml.IsEmpty("ValueAs/Date") ? xml.Evaluate("ValueAs/Date") : undefined;
+            break;
+        case 'FILE':
+            value = !xml.IsEmpty("ValueAs/File") ? {
+                Id: xml.Evaluate("ValueAs/File"),
+                Caption: xml.Evaluate("ValueAs/File/@Caption"),
+            } : undefined;
+            break;
+        case 'IDENTITY':
+            value = !xml.IsEmpty("ValueAs/Identity") ? {
+                Id: xml.Evaluate("ValueAs/Identity"),
+                Name: xml.Evaluate("ValueAs/Identity/@Caption"),
+            } : undefined;
+            break;
+        case "LIST":
+            value = [];
+            xml.SelectAll("Childs/*[not(@State) or @State!='Deleted']", function () {
+                value.push(getConfigValueFromXml(this, true));
+            });
+            break;
+        case "OBJECT":
+            value = !xml.IsEmpty("ValueAs/Object") ? JSON.parse(xml.Evaluate("ValueAs/Object")) : undefined;
+            break;
+        case "GROUP":
+            break;
+        default:
+            value = xml.Evaluate("Value");
+            break;
+    }
+
+    if (asRawValue)
+        return value;
+
+    if (value === '')
+        return '""';
+    if (value === undefined || value === null)
+        return null;
+
+    return JSON.stringify(value);
+}
+
+function selectAllEntries(rootXPath, filter, callback) {
+    $Xml.SelectAll(rootXPath + "[" + filter + "] | " + rootXPath + "//Childs/Entry[" + filter + "]", function () {
+        callback && callback(this);
+    });
+}
+
+function getConfigTableParams(isGlobal) {
+    var result = {
+        TargetSchema: 'System',
+        TargetTable: 'Configuration'
+    };
+    if (isGlobal) {
+        if (AltiKareUtils.Config.hasGlobalDB)
+            result.TargetDataStore = AltiKareUtils.Config.GLOBAL_STORE_NAME;
+        else
+            return;
+    }
+    return result;
+}]]></Content>
+    </Module>
+    <Module IsPublic="False" IsImported="False" Name="Config">
+      <Content><![CDATA[Config.CONTEXT = 'GLOBAL';
+
+function testConfigKey(key, identity, inheritDomain) {
+    if (identity)
+        return AltiKareUtils.Config.getIdentityConfig(identity, key, !!inheritDomain);
+    else
+        return AltiKareUtils.Config.getConfig(key, true);
+}
+exports.testConfigKey = testConfigKey;]]></Content>
+    </Module>
+  </ScriptModules>
+  <DecisionModels />
+  <AccessScopes />
+  <Reports />
+  <XmlSchemas>
+    <xs:schema xmlns:forms="http://schemas.emakin.com" elementFormDefault="qualified">
+      <xs:element name="Config">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="DomainConfig" type="ConfigList" />
+            <xs:element name="GlobalConfig" type="ConfigList" />
+            <xs:element name="IdentityConfig">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Filter">
+                    <xs:complexType>
+                      <xs:sequence>
+                        <xs:element name="Identity" type="forms:Identity" />
+                      </xs:sequence>
+                    </xs:complexType>
+                  </xs:element>
+                  <xs:element name="Config" type="ConfigList" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="TestPad">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Key" type="xs:string" />
+                  <xs:element name="Identity" type="forms:Identity" />
+                  <xs:element name="Inherit" type="xs:string" />
+                  <xs:element name="Result" type="xs:string" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:complexType name="ConfigList">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="Entry" type="ConfigEntry" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ConfigEntry">
+        <xs:sequence>
+          <xs:element name="Id" type="xs:string" />
+          <xs:element name="Key" type="xs:string" />
+          <xs:element name="Type" type="xs:string" />
+          <xs:element name="Name" type="xs:string" />
+          <xs:element name="Value" type="xs:string" />
+          <xs:element name="Description" type="xs:string" />
+          <xs:element name="Childs" type="ConfigList" />
+          <xs:element name="ValueAs">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="HTML" type="xs:string" />
+                <xs:element name="Text" type="xs:string" />
+                <xs:element name="Number" type="xs:decimal" />
+                <xs:element name="Bool" type="xs:boolean" />
+                <xs:element name="File" type="forms:File" />
+                <xs:element name="Identity" type="forms:Identity" />
+                <xs:element name="Object" type="xs:string" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="Setup" type="EditorSetupType" />
+          <xs:element name="Permissions">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="LockSetup" type="xs:string" />
+                <xs:element name="LockValue" type="xs:string" />
+                <xs:element name="LockChildValues" type="xs:string" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="EditorSetupType">
+        <xs:sequence>
+          <xs:element name="Type" type="xs:string" />
+          <xs:element name="ListItemType" type="xs:string" />
+          <xs:element name="BoolOptions">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="TrueCaption" type="xs:string" />
+                <xs:element name="FalseCaption" type="xs:string" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="OptionOptions">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="Entry">
+                  <xs:complexType>
+                    <xs:sequence>
+                      <xs:element name="Value" type="xs:string" />
+                      <xs:element name="Caption" type="xs:string" />
+                    </xs:sequence>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+  </XmlSchemas>
+  <ExternalXmlSchemas>
+    <xs:schema xmlns:forms="http://schemas.emakin.com" elementFormDefault="unqualified" targetNamespace="http://schemas.emakin.com">
+      <xs:complexType name="Identity">
+        <xs:sequence />
+        <xs:attribute name="Caption" type="xs:string" />
+        <xs:attribute name="Type" type="xs:string" />
+        <xs:attribute name="Domain" type="xs:string" />
+      </xs:complexType>
+      <xs:complexType name="File">
+        <xs:attribute name="Caption" />
+        <xs:attribute name="Url" />
+      </xs:complexType>
+      <xs:complexType name="DecisionTable">
+        <xs:sequence>
+          <xs:element name="OutputLabel" type="xs:string" />
+          <xs:element name="Inputs">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="1" maxOccurs="unbounded" name="Input">
+                  <xs:complexType>
+                    <xs:sequence>
+                      <xs:element name="Label" type="xs:string" />
+                      <xs:element name="Expression">
+                        <xs:complexType>
+                          <xs:attribute name="TypeRef" type="xs:string" />
+                        </xs:complexType>
+                      </xs:element>
+                      <xs:element name="InputValues">
+                        <xs:complexType>
+                          <xs:attribute name="TypeRef" type="xs:string" />
+                        </xs:complexType>
+                      </xs:element>
+                    </xs:sequence>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="Outputs">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="1" maxOccurs="unbounded" name="Output">
+                  <xs:complexType>
+                    <xs:sequence>
+                      <xs:element name="Label" type="xs:string" />
+                      <xs:element name="OutputValues" type="xs:string" />
+                      <xs:element name="Default" type="xs:string" />
+                    </xs:sequence>
+                    <xs:attribute name="TypeRef" type="xs:string" />
+                    <xs:attribute name="Name" type="xs:string" />
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="Rules">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="Rule">
+                  <xs:complexType>
+                    <xs:sequence>
+                      <xs:element name="Description" type="xs:string" />
+                      <xs:element name="Inputs">
+                        <xs:complexType>
+                          <xs:sequence>
+                            <xs:element minOccurs="0" maxOccurs="unbounded" name="Input" type="xs:string" />
+                          </xs:sequence>
+                        </xs:complexType>
+                      </xs:element>
+                      <xs:element name="Outputs">
+                        <xs:complexType>
+                          <xs:sequence>
+                            <xs:element minOccurs="0" maxOccurs="unbounded" name="Output" type="xs:string" />
+                          </xs:sequence>
+                        </xs:complexType>
+                      </xs:element>
+                    </xs:sequence>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute default="Unique" name="HitPolicy" type="xs:string" />
+        <xs:attribute name="Aggregation" type="xs:string" />
+      </xs:complexType>
+      <xs:complexType name="PivotTable">
+        <xs:sequence>
+          <xs:element name="Templates">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="Template">
+                  <xs:complexType>
+                    <xs:sequence>
+                      <xs:element name="Content" type="xs:string" />
+                    </xs:sequence>
+                    <xs:attribute name="Name" type="xs:string" />
+                    <xs:attribute name="IsDefault" type="xs:string" />
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+  </ExternalXmlSchemas>
+  <Documentation />
+  <Localization>
+    <Translations>
+      <Translation Name="Instructions" Entity="True">
+        <Locations>
+          <Location><![CDATA[//Task/Configurations/User/Instructions]]></Location>
+          <Location><![CDATA[//Route/Instructions]]></Location>
+        </Locations>
+      </Translation>
+      <Translation Name="TaskName" Entity="True">
+        <Locations>
+          <Location><![CDATA[//Task/@Caption]]></Location>
+        </Locations>
+      </Translation>
+      <Translation Name="ActionName" Entity="True">
+        <Locations>
+          <Location><![CDATA[//Action/@Caption]]></Location>
+        </Locations>
+      </Translation>
+      <Translation Name="DashboardName" Entity="False">
+        <Locations>
+          <Location><![CDATA[//Screen[@IsDashboard = 'True']/@Name]]></Location>
+        </Locations>
+      </Translation>
+      <Translation Name="FormCaption" Entity="False">
+        <Locations>
+          <Location><![CDATA[//Form/@Caption]]></Location>
+        </Locations>
+      </Translation>
+      <Translation Name="Variable" Entity="True">
+        <Locations>
+          <Location><![CDATA[//Pool/Variables/Variable]]></Location>
+        </Locations>
+      </Translation>
+      <Translation Name="RoleName" Entity="False">
+        <Locations>
+          <Location><![CDATA[//Pool/Roles/Role/@Caption]]></Location>
+        </Locations>
+      </Translation>
+      <Translation Name="ActionConfirmation" Entity="False">
+        <Locations>
+          <Location><![CDATA[//Action/ConfirmationMessage]]></Location>
+        </Locations>
+      </Translation>
+      <Translation Name="Template" Entity="False">
+        <Locations>
+          <Location><![CDATA[//Templates/Template/Content]]></Location>
+        </Locations>
+      </Translation>
+      <Translation Name="TemplateSubject" Entity="False">
+        <Locations>
+          <Location><![CDATA[//Templates/Template/Subject]]></Location>
+        </Locations>
+      </Translation>
+      <Translation Name="Label" Entity="True">
+        <Locations>
+          <Location><![CDATA[//Label/Content]]></Location>
+        </Locations>
+      </Translation>
+      <Translation Name="Literal" Entity="False">
+        <Locations>
+          <Location><![CDATA[//Footer/Content]]></Location>
+          <Location><![CDATA[//Literal/Content]]></Location>
+          <Location><![CDATA[//AddNewLabel/Content]]></Location>
+          <Location><![CDATA[//LineChart/Title/Content]]></Location>
+          <Location><![CDATA[//LineChart/XAxisLabel/Content]]></Location>
+          <Location><![CDATA[//LineChart/YAxisLabel/Content]]></Location>
+          <Location><![CDATA[//PieChart/Title/Content]]></Location>
+          <Location><![CDATA[//Column/Properties/@Caption]]></Location>
+          <Location><![CDATA[//Column/@Caption]]></Location>
+          <Location><![CDATA[//Column/Caption]]></Location>
+          <Location><![CDATA[//DataExchange/Columns/Column/Caption]]></Location>
+        </Locations>
+      </Translation>
+      <Translation Name="Html" Entity="False">
+        <Locations>
+          <Location><![CDATA[//Html/Content]]></Location>
+        </Locations>
+      </Translation>
+      <Translation Name="XPath" Entity="False">
+        <Locations>
+          <Location><![CDATA[//PieChart/Pies/Pie/LabelXPath]]></Location>
+          <Location><![CDATA[//PieChart/Pies/Pie/ValueUnitXPath]]></Location>
+          <Location><![CDATA[//LineChart/Lines/Line/LabelXPath]]></Location>
+        </Locations>
+      </Translation>
+      <Translation Name="FieldHint" Entity="False">
+        <Locations>
+          <Location><![CDATA[//Hints]]></Location>
+        </Locations>
+      </Translation>
+      <Translation Name="PlaceHolder" Entity="False">
+        <Locations>
+          <Location><![CDATA[//PlaceHolder]]></Location>
+        </Locations>
+      </Translation>
+      <Translation Name="DropDownItem" Entity="False">
+        <Locations>
+          <Location><![CDATA[//DropDown/Items/Item/Text]]></Location>
+        </Locations>
+      </Translation>
+      <Translation Name="ListItem" Entity="True">
+        <Locations>
+          <Location><![CDATA[//Items/Item/Text]]></Location>
+        </Locations>
+      </Translation>
+    </Translations>
+    <Languages />
+  </Localization>
+</ProcessDefinition>
