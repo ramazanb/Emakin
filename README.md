@@ -7,7 +7,7 @@
 
 <h3>Intallation</h3>
 <p>
-  Process graph is in AltiKareUtils.txt file. Simply create a process for central configiration purposses, and paste file contents. 
+  Process graph is in AltiKareUtils.txt file. Simply create a process for central configuration purposses, and paste file contents. 
   You now have a central configuration where you can define a tree like structured data to be used in other processes. 
 </p>
 <p>
@@ -29,14 +29,13 @@
 <p>Util library uses a CONTEXT named constant to isolate between processes. Either define this in another script module or pool to use methods.</p>
 <p>Methods are exposed over AltiKareUtils namespace followed by utility class name. (e.g.: AltiKareUtils.Xml.parse(...) method).</p>
 
-
-
-<h3>AltiKareUtils.Xml</h3>
-General XML Helper methods
-<ol>
-  <li>UTILS_VERSION</li>
-  Provides version of utility library. (e.g.: 1.0.3)
-  
-  
-  
-</ol>
+<h3>Libraries</h3>
+<p>
+  Below libraries are provided with project:
+</p>
+<ul>
+  <li><a href="https://github.com/ramazanb/Emakin/blob/master/README.Text.md#text-utilities">AltiKareUtils.Text</a></li>
+  <li><a href="https://github.com/ramazanb/Emakin/blob/master/README.Text.md#xml-utilities">AltiKareUtils.Xml</a></li>
+  <li><a href="https://github.com/ramazanb/Emakin/blob/master/README.Text.md#config-utilities">AltiKareUtils.Config</a></li>
+  <li><a href="https://github.com/ramazanb/Emakin/blob/master/README.Text.md#sequence-utilities">AltiKareUtils.Sequence</a></li>
+</ul>
