@@ -3,7 +3,7 @@ Provides XML helper methods under AltiKareUtils.Xml namespace. Contains followin
 
 ## parse 
 <p>
-  Parses string and resturns xml navigator object.
+  Parses string and returns xml navigator object.
 </p>
 <p>
   Use this method to parse xml. This method uses related object types for server/client sides and returns object itself if its already a navigator. Otherwise null will be returned. 
