@@ -35,7 +35,7 @@
 </p>
 <ul>
   <li><a href="https://github.com/ramazanb/Emakin/blob/master/README.Text.md#text-utilities">AltiKareUtils.Text</a></li>
-  <li><a href="https://github.com/ramazanb/Emakin/blob/master/README.Text.md#xml-utilities">AltiKareUtils.Xml</a></li>
-  <li><a href="https://github.com/ramazanb/Emakin/blob/master/README.Text.md#config-utilities">AltiKareUtils.Config</a></li>
-  <li><a href="https://github.com/ramazanb/Emakin/blob/master/README.Text.md#sequence-utilities">AltiKareUtils.Sequence</a></li>
+  <li><a href="https://github.com/ramazanb/Emakin/blob/master/README.Xml.md#xml-utilities">AltiKareUtils.Xml</a></li>
+  <li><a href="https://github.com/ramazanb/Emakin/blob/master/README.Config.md#config-utilities">AltiKareUtils.Config</a></li>
+  <li><a href="https://github.com/ramazanb/Emakin/blob/master/README.Sequence.md#sequence-utilities">AltiKareUtils.Sequence</a></li>
 </ul>
