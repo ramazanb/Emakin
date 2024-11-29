@@ -9,16 +9,16 @@
 ### setDomainConfig
 <p>Sets configuration for domain.</p>
 
-## Non Common Methods
-
-### getDomainConfig
-<p>Reads configuration for domain.</p>
-
 ### getIdentityConfig
 <p>Reads configuration for given identity.</p>
 
 ### setIdentityConfig
 <p>Sets configuration for identity</p>
+
+## Non Common Methods
+
+### getDomainConfig
+<p>Reads configuration for domain.</p>
 
 ### getGlobalConfig
 <p>Converts given XML to object, then JSON string.</p>
