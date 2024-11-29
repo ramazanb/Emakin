@@ -2024,8 +2024,6 @@ var UTILS_VERSION = '0.1.1';
 var GLOBAL_STORE_NAME = null;
 //var GLOBAL_STORE_NAME = 'PS_GLB';
 
-var GLOBAL_CONTEXT_NAME = 'GLOBAL';
-
 // Client / Server Side initialization.
 if (typeof window !== 'undefined' && window.document)
     window.AltiKareUtils = window.AltiKareUtils || {};
@@ -2130,7 +2128,7 @@ else
     var _mailRegex;
     Util.isValidEmail = function (str) {
         _mailRegex = _mailRegex || new RegExp(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
-        return !str || _mailRegex.test(str        );
+        return !str || _mailRegex.test(str);
     };
 
     Util.toObject = function (str) {
@@ -2167,389 +2165,389 @@ else
     };
 
     // (<b>abc</b>) -> "&lt;b&gt;abc<&lt;/&gt;"
-    Util.escape = function (str) {
+    Util.escape = function (str) 
         return str && str.replace(/[<>&'"]/g, function (c) {
-            switch (c) {
-                case '<': return '&lt;';
-                case '>': return '&gt;';
-                case '&': return '&amp;';
-                case "'": return '&apos;';
-                case '"': return '&quot;';
-            }
-        });
-    };
-
-    // (<b>abc</b>) -> "&lt;b&gt;abc<&lt;/&gt;"
-    Util.unescape = function (str) {
-        return str && str.replace(/[(&amp;|&quot;|&#39;|'&lt;|&gt;)]/g, function (c) {
-            switch (c) {
-                case '&lt;': return '<';
-                case '&gt;': return '>';
-                case '&amp;': return '&';
-                case '&apos;': return "'";
-                case '&quot;': return '"';
-            }
-        });
-    };
-
-
-    Util.setValueAndCaption = function (xml, path, value, caption) {
-        xml && xml.SelectAll(path || '.', function () {
-            this.SetValue(value);
-            if (caption != undefined && caption != null)
-                this.SetAttribute("Caption", caption);
-        });
-    };
-
-    /* Xml.copy yetmediği durumlar var, ondan emin ol öyle giriş. Şimdilik editör için yeterli 
-
-    Util.setXml = function (target, xml, path) {
-        Script.Assert(xml, "xml parameter is empty!")
-
-        target = Util.parse(target);
-        xml = Util.parse(xml);
-
-        if (target) {
-            if (path)
-                xml = xml.SelectSingle(path);
-
-            setXmlImpl(target, xml);
+        switch (c) {
+            case '<': return '&lt;';
+            case '>': return '&gt;';
+            case '&': return '&amp;';
+            case "'": return '&apos;';
+            case '"': return '&quot;';
         }
+    });
+};
 
-        return target;
-    };
-
-
-    function setXmlImpl(target, source) {
-        // Copy attributes
-        var sourceAttribs = {};
-        source.SelectAll("@*", function () {
-            sourceAttribs[this.Evaluate("name()")] = this;
-        });
-
-        target.SelectAll("@*", function () {
-
-            var name = this.Evaluate("name()");
-            var srcAttr = sourceAttribs[name];
-
-            if (!srcAttr) {
-
-                target.RemoveAttribute(name);
-
-            } else {
-
-                var val = this.Evaluate();
-                var srcVal = srcAttr.Evaluate();
-                if (val !== srcVal)
-                    target.SetAttribute(name, srcVal);
-                sourceAttribs[name] = null;
-
-            }
-        });
-
-        Object.vals(sourceAttribs).forEach(function (attrToAdd) {
-            if (attrToAdd)
-                target.SetAttribute(attrToAdd.Evaluate("name()"), attrToAdd.Evaluate());
-        });
-
-        // Copy elements
-        var sourceElements = {};
-        source.SelectAll("*", function () {
-            var name = this.Evaluate("name()");
-            if (sourceElements[name]) {
-                if (Array.isArray(sourceElements[name]))
-                    sourceElements[name].push(this);
-                else
-                    sourceElements[name] = [sourceElements[name], this];
-            } else {
-                sourceElements[name] = this;
-            }
-        });
-
-        var lastName, elementIndex = 0;
-        target.SelectAll("*", function () {
-
-            var name = this.Evaluate("name()");
-            var srcElement = sourceElements[name];
-
-            if (!srcElement) {
-
-                this.Remove();
-
-            } else {
-
-                elementIndex = (name === lastName) ? elementIndex + 1 : 0;
-                if (!Array.isArray(srcElement)) {
+// (<b>abc</b>) -> "&lt;b&gt;abc<&lt;/&gt;"
+Util.unescape = function (str) {
+    return str && str.replace(/[(&amp;|&quot;|&#39;|'&lt;|&gt;)]/g, function (c) {
+        switch (c) {
+            case '&lt;': return '<';
+            case '&gt;': return '>';
+            case '&amp;': return '&';
+            case '&apos;': return "'";
+            case '&quot;': return '"';
+        }
+    });
+};
 
 
-                }
+Util.setValueAndCaption = function (xml, path, value, caption) {
+    xml && xml.SelectAll(path || '.', function () {
+        this.SetValue(value);
+        if (caption != undefined && caption != null)
+            this.SetAttribute("Caption", caption);
+    });
+};
 
+/* Xml.copy yetmediği durumlar var, ondan emin ol öyle giriş. Şimdilik editör için yeterli 
 
-                var isComplex = this.Count("*") > 0;
-                var isSrcComplex = srcElement.Count("*") > 0;
+Util.setXml = function (target, xml, path) {
+    Script.Assert(xml, "xml parameter is empty!")
 
-                if (isComplex && isSrcComplex) {
+    target = Util.parse(target);
+    xml = Util.parse(xml);
 
-                    setXmlImpl(this, srcElement);
+    if (target) {
+        if (path)
+            xml = xml.SelectSingle(path);
 
-                } else if (isComplex && !isSrcComplex) {
-
-                    this.SetValue(srcElement.Evaluate());
-                    sourceElements[name] = null;
-
-                } else if (!isComplex && isSrcComplex) {
-
-                    this.InnerXml(srcElement.InnerXml());
-
-                } else {
-
-                }
-            }
-
-
-        });
-
-        Object.vals(sourceAttribs).forEach(function (attrToAdd) {
-            if (attrToAdd) {
-                var name = attrToAdd.Evaluate("name()");
-                target.SetAttribute(name, attrToAdd.Evaluate());
-            }
-        });
-        var nodesSet = {};
-        target.SelectAll("*[not(*)]", function () {
-            var src = xml.SelectSingle(this.Evaluate("name()"));
-            setXmlImpl(this, xml);
-        });
+        setXmlImpl(target, xml);
     }
-    */
 
-    Util.JSON_TYPE = {
-        String: 'String',
-        Boolean: 'Boolean',
-        Date: 'Date',
-        Numeric: 'Numeric',
-        Object: 'Object',
-        Array: 'Array',
-    };
-
-    Util.ELEMENT_SERIALZATION_TYPE = {
-        AllWithNoChild: 'AllWithNoChild',
-        All: 'All',
-        None: 'None',
-    };
-
-    Util.ATTRIB_SERIALZATION_TYPE = {
-        Common: 'Common', // Caption + State attributes
-        All: 'All',
-        None: 'None',
-    };
-
-    Util.ELEMENT_DESERIALZATION_TYPE = {
-        ExistingNodesWithAllAttributes: 'ExistingNodesWithAllAttributes',
-        None: 'None',
-    };
-
-    // opts = {
-    //   includeEmptyFields: false,
-    //   fields: [{ name: 'Field1', xPath: 'Field1', type: AltiKareUtils.Xml.JSON_TYPE.String, includeEmpty: false }, ..],
-    //   arrays: [..],
-    //   attribs: [..]
-    //   handleObj: function(obj, node, opts)
-    // }
-    Util.toObject = function (xml, opts, parentOpts) {
-
-        opts = mergeSerializationOpts(opts, parentOpts);
-        if (!opts)
-            return;
-
-        xml = Util.parse(xml);
-        if (!xml)
-            return;
-
-        var result = {};
-
-        if (opts.fields === Util.ELEMENT_SERIALZATION_TYPE.AllWithNoChild || opts.fields === Util.ELEMENT_SERIALZATION_TYPE.All) {
-
-            xml.SelectAll("*[not(*)]", function () {
-                if (!isArrayInJsonSerializationOptions(opts, this))
-                    setObjectField(result, this, { xPath: ".", name: this.Evaluate("name()") }, opts);
-            });
-
-        }
-
-        if (opts.fields === Util.ELEMENT_SERIALZATION_TYPE.All) {
-
-            xml.SelectAll("*[*]", function () {
-                if (!isArrayInJsonSerializationOptions(opts, this))
-                    setObjectField(result, this, { xPath: ".", name: this.Evaluate("name()"), type: Util.JSON_TYPE.Object }, opts);
-            });
+    return target;
+};
 
 
-        } else if (Array.isArray(opts.fields)) {
+function setXmlImpl(target, source) {
+    // Copy attributes
+    var sourceAttribs = {};
+    source.SelectAll("@*", function () {
+        sourceAttribs[this.Evaluate("name()")] = this;
+    });
 
-            opts.fields.forEach(function (field) {
-                setObjectField(result, xml, field, opts);
-            });
+    target.SelectAll("@*", function () {
 
-        }
+        var name = this.Evaluate("name()");
+        var srcAttr = sourceAttribs[name];
 
-        if (opts.arrays) {
+        if (!srcAttr) {
 
-            opts.arrays.forEach(function (arr) {
-                if (!arr.xPath)
-                    arr.xPath = arr.name;
-                if (!arr.rowXPath)
-                    arr.rowXPath = "*";
-                result[arr.name] = Util.toArray(xml, arr, opts);
-            });
+            target.RemoveAttribute(name);
 
-        }
-
-        setObjectAttributes(result, xml, opts);
-
-        opts.handleObject && opts.handleObj(result, xml, opts);
-
-        return result;
-    };
-
-    Util.toJSON = function (xml, opts) {
-        return JSON.stringify(Util.toObject(xml, opts));
-    };
-
-    // opts (:toObject.opts) = {
-    //   xPath: '.', rowXPath: '*', includeEmptyFields: false
-    //   handleRow: function(row, node, opts),
-    //   handleArr: function(arr, rootNode, opts),
-    // }
-    Util.toArray = function (xml, opts, parentOpts) {
-
-        opts = mergeSerializationOpts(opts, parentOpts);
-        if (!opts)
-            return;
-
-        xml = Util.parse(xml);
-        if (!xml)
-            return;
-
-        var result = null;
-
-        // Fix xPath & rowXPath
-        var rootNode = xml;
-        if (opts.xPath) {
-            if (opts.rowXPath) {
-                rootNode = xml.SelectSingle(opts.xPath);
-            } else {
-                opts.rowXPath = opts.xPath;
-                opts.xPath = "";
-            }
         } else {
-            if (!opts.rowXPath)
-                opts.rowXPath = "*";
-        }
 
-        if (rootNode) {
-            result = [];
-            rootNode.SelectAll(opts.rowXPath, function () {
-                var row = Util.toObject(this, opts);
-                if (row !== undefined)
-                    result.push(row);
-                opts.handleRow && opts.handleRow(row, this, opts);
-            });
+            var val = this.Evaluate();
+            var srcVal = srcAttr.Evaluate();
+            if (val !== srcVal)
+                target.SetAttribute(name, srcVal);
+            sourceAttribs[name] = null;
 
         }
-        opts.handleArr && opts.handleArr(result, rootNode, opts);
+    });
 
-        return result;
-    };
+    Object.vals(sourceAttribs).forEach(function (attrToAdd) {
+        if (attrToAdd)
+            target.SetAttribute(attrToAdd.Evaluate("name()"), attrToAdd.Evaluate());
+    });
 
-    function mergeSerializationOpts(opts, parentOpts) {
-        if (opts && typeof opts === 'string')
-            opts = { name: opts };
-        else
-            opts = opts || {};
+    // Copy elements
+    var sourceElements = {};
+    source.SelectAll("*", function () {
+        var name = this.Evaluate("name()");
+        if (sourceElements[name]) {
+            if (Array.isArray(sourceElements[name]))
+                sourceElements[name].push(this);
+            else
+                sourceElements[name] = [sourceElements[name], this];
+        } else {
+            sourceElements[name] = this;
+        }
+    });
 
-        if (opts.fields === Util.ELEMENT_SERIALZATION_TYPE.None)
-            return null;
+    var lastName, elementIndex = 0;
+    target.SelectAll("*", function () {
 
-        if (parentOpts) {
-            if (!opts.fields && !Array.isArray(parentOpts.fields))
-                opts.fields = parentOpts.fields;
+        var name = this.Evaluate("name()");
+        var srcElement = sourceElements[name];
 
-            if (!opts.attribs && !Array.isArray(parentOpts.attribs))
-                opts.attribs = parentOpts.attribs;
+        if (!srcElement) {
 
-            if (!opts.includeEmptyFields && opts.includeEmptyFields !== false && parentOpts.includeEmptyFields)
-                opts.includeEmptyFields = true;
+            this.Remove();
+
+        } else {
+
+            elementIndex = (name === lastName) ? elementIndex + 1 : 0;
+            if (!Array.isArray(srcElement)) {
+
+
+            }
+
+
+            var isComplex = this.Count("*") > 0;
+            var isSrcComplex = srcElement.Count("*") > 0;
+
+            if (isComplex && isSrcComplex) {
+
+                setXmlImpl(this, srcElement);
+
+            } else if (isComplex && !isSrcComplex) {
+
+                this.SetValue(srcElement.Evaluate());
+                sourceElements[name] = null;
+
+            } else if (!isComplex && isSrcComplex) {
+
+                this.InnerXml(srcElement.InnerXml());
+
+            } else {
+
+            }
         }
 
-        opts.fields = opts.fields || Util.ELEMENT_SERIALZATION_TYPE.AllWithNoChild;
-        opts.attribs = opts.attribs || Util.ATTRIB_SERIALZATION_TYPE.Common;
 
-        return opts;
+    });
+
+    Object.vals(sourceAttribs).forEach(function (attrToAdd) {
+        if (attrToAdd) {
+            var name = attrToAdd.Evaluate("name()");
+            target.SetAttribute(name, attrToAdd.Evaluate());
+        }
+    });
+    var nodesSet = {};
+    target.SelectAll("*[not(*)]", function () {
+        var src = xml.SelectSingle(this.Evaluate("name()"));
+        setXmlImpl(this, xml);
+    });
+}
+*/
+
+Util.JSON_TYPE = {
+    String: 'String',
+    Boolean: 'Boolean',
+    Date: 'Date',
+    Numeric: 'Numeric',
+    Object: 'Object',
+    Array: 'Array',
+};
+
+Util.ELEMENT_SERIALZATION_TYPE = {
+    AllWithNoChild: 'AllWithNoChild',
+    All: 'All',
+    None: 'None',
+};
+
+Util.ATTRIB_SERIALZATION_TYPE = {
+    Common: 'Common', // Caption + State attributes
+    All: 'All',
+    None: 'None',
+};
+
+Util.ELEMENT_DESERIALZATION_TYPE = {
+    ExistingNodesWithAllAttributes: 'ExistingNodesWithAllAttributes',
+    None: 'None',
+};
+
+// opts = {
+//   includeEmptyFields: false,
+//   fields: [{ name: 'Field1', xPath: 'Field1', type: AltiKareUtils.Xml.JSON_TYPE.String, includeEmpty: false }, ..],
+//   arrays: [..],
+//   attribs: [..]
+//   handleObj: function(obj, node, opts)
+// }
+Util.toObject = function (xml, opts, parentOpts) {
+
+    opts = mergeSerializationOpts(opts, parentOpts);
+    if (!opts)
+        return;
+
+    xml = Util.parse(xml);
+    if (!xml)
+        return;
+
+    var result = {};
+
+    if (opts.fields === Util.ELEMENT_SERIALZATION_TYPE.AllWithNoChild || opts.fields === Util.ELEMENT_SERIALZATION_TYPE.All) {
+
+        xml.SelectAll("*[not(*)]", function () {
+            if (!isArrayInJsonSerializationOptions(opts, this))
+                setObjectField(result, this, { xPath: ".", name: this.Evaluate("name()") }, opts);
+        });
+
     }
 
-    // opts = {
-    //   name: 'Field1', xPath: 'Field1', type: JSON_TYPE.String, includeEmpty: false,
-    //   attribs: [{ name: 'field@a', xPath: '@a', type: JSON_TYPE.String, includeEmpty: false }]
-    // }
-    function setObjectField(obj, xml, opts, parentOpts) {
-        xml = xml && (opts.xPath === '.' ? xml : xml.SelectSingle(opts.xPath || opts.name));
-        if (!xml)
-            return;
+    if (opts.fields === Util.ELEMENT_SERIALZATION_TYPE.All) {
 
-        var isEmpty = xml.IsEmpty();
-        if (!isEmpty || opts.includeEmpty || (parentOpts && parentOpts.includeEmptyFields)) {
+        xml.SelectAll("*[*]", function () {
+            if (!isArrayInJsonSerializationOptions(opts, this))
+                setObjectField(result, this, { xPath: ".", name: this.Evaluate("name()"), type: Util.JSON_TYPE.Object }, opts);
+        });
 
-            if ((opts.type || Util.JSON_TYPE.String) === Util.JSON_TYPE.String)
-                obj[opts.name] = isEmpty ? "" : xml.Evaluate();
-            else if (opts.type === Util.JSON_TYPE.Numeric)
-                obj[opts.name] = isEmpty ? null : xml.EvaluateNumber();
-            else if (opts.type === Util.JSON_TYPE.Boolean)
-                obj[opts.name] = isEmpty ? null : xml.EvaluateBoolean();
-            else if (opts.type === Util.JSON_TYPE.Date)
-                obj[opts.name] = isEmpty ? null : xml.EvaluateDateTime();
-            else if (opts.type === Util.JSON_TYPE.Object)
-                obj[opts.name] = isEmpty ? {} : Util.toObject(xml, opts, parentOpts);
-            else if (opts.type === Util.JSON_TYPE.Array)
-                obj[opts.name] = isEmpty ? [] : Util.toArray(xml, opts, parentOpts);
-        }
 
-        setObjectAttributes(obj, xml, opts);
+    } else if (Array.isArray(opts.fields)) {
+
+        opts.fields.forEach(function (field) {
+            setObjectField(result, xml, field, opts);
+        });
+
     }
 
-    function setObjectAttributes(obj, xml, opts) {
-        if (opts.attribs === Util.ATTRIB_SERIALZATION_TYPE.None)
-            return;
+    if (opts.arrays) {
 
-        if ((opts.attribs || Util.ATTRIB_SERIALZATION_TYPE.Common) === Util.ATTRIB_SERIALZATION_TYPE.Common) {
+        opts.arrays.forEach(function (arr) {
+            if (!arr.xPath)
+                arr.xPath = arr.name;
+            if (!arr.rowXPath)
+                arr.rowXPath = "*";
+            result[arr.name] = Util.toArray(xml, arr, opts);
+        });
 
-            setObjectField(obj, xml, { name: (opts.name || "") + "@Caption", xPath: "@Caption" });
-            setObjectField(obj, xml, { name: (opts.name || "") + "@State", xPath: "@State" });
-
-        } else if (opts.attribs === Util.ATTRIB_SERIALZATION_TYPE.All) {
-
-            xml.SelectAll("@*", function () {
-                var attribName = this.Evaluate("name()");
-                setObjectField(obj, this, { name: (opts.name || "") + "@" + attribName, xPath: "@" + attribName });
-            });
-
-        } else if (Array.isArray(opts.attribs)) {
-
-            opts.attribs.forEach(function (attrib) {
-                setObjectField(obj, xml, attrib);
-            });
-
-        }
     }
 
-    function isArrayInJsonSerializationOptions(opts, node) {
-        var result = false;
-        if (opts.arrays) {
-            var nodeName = node.navigator.node.localName;
-            result = opts.arrays.some(function (e) { e.name === nodeName; })
+    setObjectAttributes(result, xml, opts);
+
+    opts.handleObject && opts.handleObj(result, xml, opts);
+
+    return result;
+};
+
+Util.toJSON = function (xml, opts) {
+    return JSON.stringify(Util.toObject(xml, opts));
+};
+
+// opts (:toObject.opts) = {
+//   xPath: '.', rowXPath: '*', includeEmptyFields: false
+//   handleRow: function(row, node, opts),
+//   handleArr: function(arr, rootNode, opts),
+// }
+Util.toArray = function (xml, opts, parentOpts) {
+
+    opts = mergeSerializationOpts(opts, parentOpts);
+    if (!opts)
+        return;
+
+    xml = Util.parse(xml);
+    if (!xml)
+        return;
+
+    var result = null;
+
+    // Fix xPath & rowXPath
+    var rootNode = xml;
+    if (opts.xPath) {
+        if (opts.rowXPath) {
+            rootNode = xml.SelectSingle(opts.xPath);
+        } else {
+            opts.rowXPath = opts.xPath;
+            opts.xPath = "";
         }
-        return result;
+    } else {
+        if (!opts.rowXPath)
+            opts.rowXPath = "*";
     }
+
+    if (rootNode) {
+        result = [];
+        rootNode.SelectAll(opts.rowXPath, function () {
+            var row = Util.toObject(this, opts);
+            if (row !== undefined)
+                result.push(row);
+            opts.handleRow && opts.handleRow(row, this, opts);
+        });
+
+    }
+    opts.handleArr && opts.handleArr(result, rootNode, opts);
+
+    return result;
+};
+
+function mergeSerializationOpts(opts, parentOpts) {
+    if (opts && typeof opts === 'string')
+        opts = { name: opts };
+    else
+        opts = opts || {};
+
+    if (opts.fields === Util.ELEMENT_SERIALZATION_TYPE.None)
+        return null;
+
+    if (parentOpts) {
+        if (!opts.fields && !Array.isArray(parentOpts.fields))
+            opts.fields = parentOpts.fields;
+
+        if (!opts.attribs && !Array.isArray(parentOpts.attribs))
+            opts.attribs = parentOpts.attribs;
+
+        if (!opts.includeEmptyFields && opts.includeEmptyFields !== false && parentOpts.includeEmptyFields)
+            opts.includeEmptyFields = true;
+    }
+
+    opts.fields = opts.fields || Util.ELEMENT_SERIALZATION_TYPE.AllWithNoChild;
+    opts.attribs = opts.attribs || Util.ATTRIB_SERIALZATION_TYPE.Common;
+
+    return opts;
+}
+
+// opts = {
+//   name: 'Field1', xPath: 'Field1', type: JSON_TYPE.String, includeEmpty: false,
+//   attribs: [{ name: 'field@a', xPath: '@a', type: JSON_TYPE.String, includeEmpty: false }]
+// }
+function setObjectField(obj, xml, opts, parentOpts) {
+    xml = xml && (opts.xPath === '.' ? xml : xml.SelectSingle(opts.xPath || opts.name));
+    if (!xml)
+        return;
+
+    var isEmpty = xml.IsEmpty();
+    if (!isEmpty || opts.includeEmpty || (parentOpts && parentOpts.includeEmptyFields)) {
+
+        if ((opts.type || Util.JSON_TYPE.String) === Util.JSON_TYPE.String)
+            obj[opts.name] = isEmpty ? "" : xml.Evaluate();
+        else if (opts.type === Util.JSON_TYPE.Numeric)
+            obj[opts.name] = isEmpty ? null : xml.EvaluateNumber();
+        else if (opts.type === Util.JSON_TYPE.Boolean)
+            obj[opts.name] = isEmpty ? null : xml.EvaluateBoolean();
+        else if (opts.type === Util.JSON_TYPE.Date)
+            obj[opts.name] = isEmpty ? null : xml.EvaluateDateTime();
+        else if (opts.type === Util.JSON_TYPE.Object)
+            obj[opts.name] = isEmpty ? {} : Util.toObject(xml, opts, parentOpts);
+        else if (opts.type === Util.JSON_TYPE.Array)
+            obj[opts.name] = isEmpty ? [] : Util.toArray(xml, opts, parentOpts);
+    }
+
+    setObjectAttributes(obj, xml, opts);
+}
+
+function setObjectAttributes(obj, xml, opts) {
+    if (opts.attribs === Util.ATTRIB_SERIALZATION_TYPE.None)
+        return;
+
+    if ((opts.attribs || Util.ATTRIB_SERIALZATION_TYPE.Common) === Util.ATTRIB_SERIALZATION_TYPE.Common) {
+
+        setObjectField(obj, xml, { name: (opts.name || "") + "@Caption", xPath: "@Caption" });
+        setObjectField(obj, xml, { name: (opts.name || "") + "@State", xPath: "@State" });
+
+    } else if (opts.attribs === Util.ATTRIB_SERIALZATION_TYPE.All) {
+
+        xml.SelectAll("@*", function () {
+            var attribName = this.Evaluate("name()");
+            setObjectField(obj, this, { name: (opts.name || "") + "@" + attribName, xPath: "@" + attribName });
+        });
+
+    } else if (Array.isArray(opts.attribs)) {
+
+        opts.attribs.forEach(function (attrib) {
+            setObjectField(obj, xml, attrib);
+        });
+
+    }
+}
+
+function isArrayInJsonSerializationOptions(opts, node) {
+    var result = false;
+    if (opts.arrays) {
+        var nodeName = node.navigator.node.localName;
+        result = opts.arrays.some(function (e) { e.name === nodeName; })
+    }
+    return result;
+}
     /*
         Util.importFromObj = function (obj, xml, opts, parentOpts) {
             opts = mergeDeserializationOpts(opts, parentOpts);
@@ -2612,7 +2610,7 @@ else
             setObjectAttributes(obj, xml, opts);
         }
     */
-})(AltiKareUtils.Xml = AltiKareUtils.Xml || {});
+}) (AltiKareUtils.Xml = AltiKareUtils.Xml || {});
 
 /******** Server Side Modules *********/
 if (typeof window === 'undefined') {
@@ -2650,6 +2648,8 @@ if (typeof window === 'undefined') {
 
         Util.resolveContext = function (context) {
             if (!context) {
+                if (typeof Config !== 'undefined' && Config && Config.CONTEXT) // Defined in Config Module
+                    context = Config.CONTEXT;
                 if (typeof Config !== 'undefined' && Config && Config.CONTEXT) // Defined in Config Module
                     context = Config.CONTEXT;
                 else if (typeof $CONTEXT !== undefined && $CONTEXT) // Defined as CONTEXT variable in pool
@@ -2740,7 +2740,7 @@ if (typeof window === 'undefined') {
 
             if (!key) {
                 key = context;
-                context = Util.resolveContext() || GLOBAL_CONTEXT_NAME;
+                context = Util.resolveContext();
             }
             Script.Assert(context, "context parameter is empty!")
 
@@ -2908,8 +2908,9 @@ if (typeof window === 'undefined') {
 
             if (!key) {
                 key = context;
-                context = AltiKareUtils.Config.resolveContext() || GLOBAL_CONTEXT_NAME;
+                context = AltiKareUtils.Config.resolveContext();
             }
+            Script.Assert(context, "context parameter is empty!")
             Script.Assert(key, "key parameter is empty!")
 
             var tableParams = {
