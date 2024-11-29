@@ -43,7 +43,7 @@ AltiKare.Workflow.Agent.exe registerstore "mycompany.com" "PS_GLB" "AltiKareUtil
   Below libraries are provided with project:
 </p>
 
-- <a href="https://github.com/ramazanb/Emakin/blob/master/README.Text.md#text-utilities">AltiKareUtils.Text</a>
-- <a href="https://github.com/ramazanb/Emakin/blob/master/README.Xml.md#xml-utilities">AltiKareUtils.Xml</a>
-- <a href="https://github.com/ramazanb/Emakin/blob/master/README.Config.md#config-utilities">AltiKareUtils.Config</a>
-- <a href="https://github.com/ramazanb/Emakin/blob/master/README.Sequence.md#sequence-utilities">AltiKareUtils.Sequence</a>
+- <a href="https://github.com/ramazanb/Emakin/blob/master/AltiKareUtils.Text.md">AltiKareUtils.Text</a>
+- <a href="https://github.com/ramazanb/Emakin/blob/master/AltiKareUtils.Xml.md">AltiKareUtils.Xml</a>
+- <a href="https://github.com/ramazanb/Emakin/blob/master/AltiKareUtils.Config.md">AltiKareUtils.Config</a>
+- <a href="https://github.com/ramazanb/Emakin/blob/master/AltiKareUtils.Sequence.md">AltiKareUtils.Sequence</a>
