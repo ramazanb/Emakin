@@ -24,6 +24,7 @@
 ```
 AltiKare.Workflow.Agent.exe registerstore "mycompany.com" "PS_GLB" "AltiKareUtils.txt"
 ```
+
 > [!NOTE]
 > PS_ prefix is required. mycompany.com is application name in Emakin system.
 > You will need to set GLOBAL_STORE_NAME variable on top of utilities module script as PS_GLB to make it useable. (Currently no autodetect method is available).
@@ -35,8 +36,10 @@ AltiKare.Workflow.Agent.exe registerstore "mycompany.com" "PS_GLB" "AltiKareUtil
   So for now, just copy module script contents to your processes and manually refresh it as needed.
   This may change in future versions of Emakin, so stay tuned.
 </p>
-<p>Util library uses a CONTEXT named constant to isolate between processes. Either define this in another script module or pool to use methods.</p>
 <p>Methods are exposed over AltiKareUtils namespace followed by utility class name. (e.g.: AltiKareUtils.Xml.parse(...) method).</p>
+
+> [!NOTE]
+> Util library uses a CONTEXT named constant to isolate between processes. Either define this in Config named script module or variable in pool to use methods.
 
 ### Libraries
 <p>
