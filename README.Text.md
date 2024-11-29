@@ -10,13 +10,13 @@ Provides text helper methods under AltiKareUtils.Text namespace. Contains follow
   On your reports / search screens, use toSearchTextCriteriaBlock methods to search records with keywords.
 </p>
   
-<h3>Syntax</h3>
+Syntax:
 
 ```javascript
 string toSearchText(arg1, arg2...)
 ```
 
-<h3>Examples</h3>
+Examples:
 
 ```javascript
 console.log(AltiKareUtils.Text.toSearchText("ALİ  doğan ", ".", "1234-5678", null, undefined);
